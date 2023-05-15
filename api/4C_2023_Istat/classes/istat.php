@@ -7,21 +7,21 @@ class Istat
 
     public function __construct($dbconn)
     {
-        $this->$connection = $dbconn;
+        $this->connection = $dbconn;
     }
 
     public function region()
     {
         try
         {
-            $table = $this->$table_name;
+            $table = $this->table_name;
 
-            $query = "SELECT DISTINCT region
-                    FROM $table
-                    ORDER BY region";
-
+            $query = "SELECT DISTINCT region 
+                        FROM $table 
+                        ORDER BY region";
+            
             $stmt = $this
-                ->$connection
+                ->connection
                 ->prepare($query);
             
             $stmt->execute();
@@ -40,7 +40,7 @@ class Istat
     {
         try
         {
-            $table = $this->$table_name;
+            $table = $this->table_name;
 
             $query = "SELECT DISTINCT province
                     FROM $table
@@ -48,7 +48,7 @@ class Istat
                     ORDER BY province";
 
             $stmt = $this
-                ->$connection
+                ->connection
                 ->prepare($query);
             
             $data['region'] = htmlspecialchars(strip_tags($data['region']));
@@ -72,7 +72,7 @@ class Istat
     {
         try
         {
-            $table = $this->$table_name;
+            $table = $this->table_name;
 
             $query = "SELECT DISTINCT city
                     FROM $table
@@ -80,7 +80,7 @@ class Istat
                     ORDER BY city";
 
             $stmt = $this
-                ->$connection
+                ->connection
                 ->prepare($query);
             
             $data['province'] = htmlspecialchars(strip_tags($data['province']));

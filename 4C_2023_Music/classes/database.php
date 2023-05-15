@@ -3,7 +3,7 @@
     {
         private $host = "localhost";
 
-        private $db_name = "istat";
+        private $db_name = "music";
 
         private $username = "root";
 
@@ -25,6 +25,8 @@
                     "mysql:host=$host;dbname=$db_name",
                     $username, 
                     $password);
+                
+                $this->connection->exec("set names utf8");
             }
             catch(PDOException $ex)
             {
