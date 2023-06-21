@@ -22,12 +22,14 @@
             integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" 
             crossorigin="anonymous">
         </script>
+        <!--
         <script src="JS/navBar.js"></script>
         <script src="JS/loginSignPage.js"></script>
         <script src="JS/dataAjax.js"></script>
-        <script src="JS/script.js"></script>
+-->
+        <script type="module" src="JS/script.js"></script>
 </head>
 <body>
-    
+
 </body>
 </html>
