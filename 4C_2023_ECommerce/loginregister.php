@@ -25,7 +25,8 @@
       <div class="hero_area">
          <!-- header section strats -->
          <header class="header_section">
-            <?php require_once "./components/navbar.php" ?>
+            <div class="container">
+               <?php require_once "./components/navbar.php" ?>
             </div>
          </header>
          <!-- end header section -->

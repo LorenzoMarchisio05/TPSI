@@ -49,11 +49,26 @@
          <div class="container">
             <div class="heading_container heading_center">
                <h2>
-                  Our <span>products</span>
+                  Your <span>products</span>
                </h2>
             </div>
-            <div id="products_container" class="row">
+            <div id="cart_products_container" class="row">
                
+            </div>
+         </div>
+      </section>
+
+      <section class="inner_page_head">
+         <div class="container_fuild">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="full">
+                     <h3>Finish your order</h3>
+                     <div class="options">
+                        <button type="button" id="payAndOrderButton" class="option2">Pay and Order</button>
+                     </div>
+                  </div>
+               </div>
             </div>
          </div>
       </section>
@@ -70,8 +85,8 @@
       <!-- bootstrap js -->
       <script src="js/bootstrap.js"></script>
       <!-- custom js -->
-      <script src="js/custom.js"></script>
       <script src="js/users.js"></script>
-      <script src="js/product.js"></script>
+      <script src="js/custom.js"></script>
+      <script src="js/shoppingCart.js"></script>
    </body>
 </html>
