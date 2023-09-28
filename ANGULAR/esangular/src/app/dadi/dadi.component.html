@@ -1,0 +1,12 @@
+<h1 [ngStyle]="{'backgroundColor': dado1 > dado2 ? 'red' : dado2 > dado1 ? 'green' : 'yellow'}"> {{ title }} </h1>
+<main class="container center-xy">
+    <!--  -->
+    <div class="dado">
+        <img src="{{pathDado1}}" alt="{{dado1}}">
+    </div>
+
+    <div class="dado">
+        <img src="{{pathDado2}}" alt="{{dado2}}">
+    </div>
+</main>
+

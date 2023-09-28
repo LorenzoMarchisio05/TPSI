@@ -1,0 +1,38 @@
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+.center-xy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rosso { background-color: red; }
+.verde { background-color: green; }
+.giallo { background-color: yellow; }
+
+.dado {
+    --size: 100px;
+
+    display: inline-block;
+    width: var(--size);
+    height: var(--size);
+
+    border: 1px solid black;
+
+    text-align: center;
+    line-height: 50px;
+}
+
+.dado > img  {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dado + .dado {
+    margin-inline-start: 5px; 
+}
+
