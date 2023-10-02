@@ -1,4 +1,13 @@
-<h1 [ngStyle]="{'backgroundColor': dado1 > dado2 ? 'red' : dado2 > dado1 ? 'green' : 'yellow'}"> {{ title }} </h1>
+<h1 [ngStyle]="{'backgroundColor': dado1 > dado2 ? 'green' : dado2 > dado1 ? 'red' : 'yellow'}"> {{ title }} </h1>
+
+<div [ngClass]="{'rosso': dado1<dado2, 'verde': dado1>dado2, 'giallo': dado1==dado2}"> 
+    <h1 *ngIf="dado1 > dado2"> Vince dado1 </h1>
+    <h1 *ngIf="dado2 > dado1"> Vince dado2 </h1>
+    <h1 *ngIf="pari">Pareggio</h1>
+</div>
+
+
+
 <main class="container center-xy">
     <!--  -->
     <div class="dado">
