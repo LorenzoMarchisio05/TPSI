@@ -1,0 +1,22 @@
+<label>
+    <input type="checkbox" (change)="mostraPagine = !mostraPagine">
+    Mostra Pagine
+</label>
+<table border="1">
+    <thead>
+        <tr >
+            <th *ngFor="let header of headers"> {{header}} </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let libro of libri" 
+            [ngStyle]="{ backgroundColor: libro.country === 'Italy' ? 'lightblue' : '' }"
+            [ngClass]="{'min-1800': libro.year < 1800}">
+            <td>{{libro.author}}</td>
+            <td>{{libro.country}}</td>
+            <td *ngIf="mostraPagine">{{libro.pages}}</td>
+            <td>{{libro.title}}</td>
+            <td>{{libro.year}}</td>
+        </tr>
+    </tbody>
+</table>
