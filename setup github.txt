@@ -1,0 +1,70 @@
+apri cmd ( windows + R -> cmd )
+
+cd *vostro utente*
+
+git config --global user.name ""
+
+git config --global user.email "email@example.com"
+
+ssh-keygen -o -t rsa -C "email@example.com"
+(date invio per ogni cosa che vi chiede)
+
+esempio output:
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/ubuntu/.ssh/id_rsa): 
+Enter passphrase (empty for no passphrase): 
+Your identification has been saved in /home/ubuntu/.ssh/id_rsa
+Your public key has been saved in /home/ubuntu/.ssh/id_rsa.pub
+The key fingerprint is: SHA256:g7RTuw9S+...
+The key's randomart image is:
++---[RSA 3072]----+
+|  ..Bo+.+o.. |
+|. *.= +E . . |
+| ...+ .. . . |
+| +.. ...+ o  |
+|  B o  ++  S |
+| o . * = o + |
+| o  B.oo  .  |
+|   = oo  +   |
+|   .o .o .   |
++----[SHA256]-----+
+
+
+a noi interessa questa linea 
+
+Your public key has been saved in /home/ubuntu/.ssh/id_rsa.pub
+
+copiatevi il path: /home/ubuntu/.ssh/id_rsa.pub 
+
+code /home/ubuntu/.ssh/id_rsa.pub
+
+il contenuto del file sara simile a:
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwrUzqtm
+3K9YNI2WbXxkcfnHZgyW7/3WXghBbKndhbKbCR00JLfTHsK
+Kaz17c4xIHQrw7u0GsPXai6pMtwMeVmXQH00L5hD0WE5Ioo
+
+copiate il contenuto
+
+andate su github -> impostazioni -> SSH e GPG keys
+
+nuova chiave SSH
+
+dategli un titolo e copiate nella textbox chiave la vostra chiave
+questa:
+
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCwrUzqtm
+3K9YNI2WbXxkcfnHZgyW7/3WXghBbKndhbKbCR00JLfTHsK
+Kaz17c4xIHQrw7u0GsPXai6pMtwMeVmXQH00L5hD0WE5Ioo
+
+aggiungete la chiave e tutto dovrebbe funzionare
+
+andate sul terminale 
+
+git clone "url"
+
+esempio url "git@github.com:Username/project_5CINF.git"
+
+copiate l'url da github (SSH) 
+
+

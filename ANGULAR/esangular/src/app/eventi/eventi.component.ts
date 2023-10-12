@@ -6,8 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./eventi.component.css']
 })
 export class EventiComponent {
+  nome!: string;
+  textChanged!: string;
 
-  btnClick() {
-    console.log("click");
+  ngOnInit() {
+    this.nome="Inserito da ngOnInit";
+  }
+  btnClick(){
+    window.alert('Salve Mondo')
+  }
+  txtNomeTextChanged() {
+    this.textChanged=this.nome;
   }
 }

@@ -1,4 +1,12 @@
 <form>
     <button (click)="btnClick()">Prova evento click</button>
-    
+    <br>
+    <br>
+    <label for="txtNome">Nome: </label>
+    <input type="text" name="txtNome" (input)="txtNomeTextChanged()" [(ngModel)]="nome">
+    <br>
+    <label for="txtTextChanged">TextChanged: </label>
+    <input type="text" name="txtTextChanged" [value]="textChanged">
+    <br>
+    <br>
 </form>
