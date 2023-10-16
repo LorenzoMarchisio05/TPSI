@@ -8,6 +8,8 @@ import { DadiComponent } from './dadi/dadi.component';
 import { NeveComponent } from './neve/neve.component';
 import { BooksComponent } from './books/books.component';
 import { EventiComponent } from './eventi/eventi.component';
+import { OutputServizioComponent } from './output-servizio/output-servizio.component';
+import { OutputServizioChildComponent } from './output-servizio/output-servizio-child/output-servizio-child.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import { EventiComponent } from './eventi/eventi.component';
     NeveComponent,
     BooksComponent,
     EventiComponent,
+    OutputServizioComponent,
+    OutputServizioChildComponent,
   ],
   imports: [
     BrowserModule,
