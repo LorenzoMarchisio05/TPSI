@@ -29,6 +29,7 @@ export class DadiComponent {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 
-  @Input() title!: string;
+  @Input({required: true}) 
+  title!: string;
 }
 

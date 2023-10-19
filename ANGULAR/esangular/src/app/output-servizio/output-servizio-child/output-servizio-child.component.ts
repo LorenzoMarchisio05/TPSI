@@ -20,6 +20,7 @@ export class OutputServizioChildComponent {
   
   ngOnInit() {
     this.randomProvider.setValue(this.min, this.max);
+    fetch("http://82.50.147.28:8080/").then(console.log);
   }
 
   generaNumero() {
