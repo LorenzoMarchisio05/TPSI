@@ -11,6 +11,7 @@ import { BooksComponent } from './books/books.component';
 import { EventiComponent } from './eventi/eventi.component';
 import { OutputServizioComponent } from './output-servizio/output-servizio.component';
 import { OutputServizioChildComponent } from './output-servizio/output-servizio-child/output-servizio-child.component';
+import { LibriConServizioComponent } from './libri-con-servizio/libri-con-servizio.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { OutputServizioChildComponent } from './output-servizio/output-servizio-
     EventiComponent,
     OutputServizioComponent,
     OutputServizioChildComponent,
+    LibriConServizioComponent,
   ],
   imports: [
     BrowserModule,
