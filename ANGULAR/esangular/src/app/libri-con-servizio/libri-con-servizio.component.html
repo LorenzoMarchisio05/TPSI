@@ -1,14 +1,15 @@
 <table border="1">
     <thead>
         <tr >
-            <th>Id</th>
             <th *ngFor="let header of headers"> {{header}} </th>
+            <th> Modifica</th>
+            <th> Elimina </th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let libro of libri">
             <td>
-                <button (click)="btnDettagli_Click(libro.id)">{{ libro.Id }}</button>
+                <button (click)="btnDettagli_Click(libro.id)">{{ libro.id }}</button>
             </td>
             <td>{{libro.author}}</td>
             <td>{{libro.country}}</td>

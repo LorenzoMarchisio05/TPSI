@@ -1,38 +1,6 @@
 {
   "books": [
     {
-      "id": 1,
-      "author": "Hans Christian Andersen",
-      "country": "Denmark",
-      "pages": 784,
-      "title": "Fairy tales",
-      "year": 1836
-    },
-    {
-      "id": 2,
-      "author": "Dante Alighieri",
-      "country": "Italy",
-      "pages": 928,
-      "title": "The Divine Comedy",
-      "year": 1315
-    },
-    {
-      "id": 3,
-      "author": "Jane Austen",
-      "country": "United Kingdom",
-      "pages": 226,
-      "title": "Pride and Prejudice",
-      "year": 1813
-    },
-    {
-      "id": 4,
-      "author": "Samuel Beckett",
-      "country": "Republic of Ireland",
-      "pages": 256,
-      "title": "Molloy, Malone Dies, The Unnamable, the trilogy",
-      "year": 1952
-    },
-    {
       "id": 5,
       "author": "Giovanni Boccaccio",
       "country": "Italy",
@@ -58,11 +26,19 @@
     },
     {
       "id": 8,
-      "author": "Anton Chekhov",
-      "country": "Russia",
-      "pages": 194,
-      "title": "Stories",
-      "year": 1886
+      "author": "autore1",
+      "country": "country1",
+      "pages": 234,
+      "title": "titolo2",
+      "year": 1967
+    },
+    {
+      "id": 1034,
+      "author": "autore",
+      "country": "country",
+      "pages": 234,
+      "title": "titolo",
+      "year": 1967
     }
   ]
 }

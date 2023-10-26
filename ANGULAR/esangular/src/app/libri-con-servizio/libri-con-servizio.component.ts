@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DataStorageService } from '../services/data-storage.service';
+import { LibriService } from '../services/libri.service';
 import { Book } from './book.model';
 
 @Component({
@@ -8,34 +8,71 @@ import { Book } from './book.model';
   styleUrls: ['./libri-con-servizio.component.css']
 })
 export class LibriConServizioComponent {
-  private endpoint: string = 'http://localhost:3000'
+  private endpoint: string = '/books/';
 
   libri!: Book[];
   headers!: string[];
 
   constructor ( 
-    private dataStorageService: DataStorageService,
+    private libriService: LibriService,
   ) { }
 
-  ngOnInit() {
-    this.libri = [];
-    this.headers = Object.keys(this.libri[0])
+  async ngOnInit () {
+    try {
+      this.libri = await this.libriService.GetBooks() || [];
+      
+      this.headers = this.libri.length > 0 ? Object.keys(this.libri[0]) : [];
+    } catch (e) {
+      alert("errore caricamento libri");
+    }
   }
 
-  btnDettagli_Click(id: number) {
-    
+  async btnDettagli_Click(id: number) {
+    try {
+      const {author, country, pages, title, year} = await this.libriService.GetBook(id);
+      
+      alert([id, author, country, pages, title, year].join(', '));
+    } catch (e) {
+        alert("errore recupero libro");
+    }
   }
 
-  btnElimina_Click(id: number) {
-    
+  async btnElimina_Click(id: number) {
+    try {
+      await this.libriService.DeleteBook(id);
+      
+      alert("libro eliminato con successo");
+      this.ngOnInit();
+    } catch (e) {
+      alert("errore eliminazione libro");
+    }
   }
 
-  btnModifica_Click(id: number) {
-    
+  async btnModifica_Click(id: number) {
+    const book = new Book(id, "autore1", "country1", 234, "titolo2", 1967);
+    try {
+      await this.libriService.UpdateBook(book);
+      
+      alert("libro aggiornato con successo");
+      this.ngOnInit();
+    } catch (e) {
+      alert("errore aggiornamento libro");
+    }
   }
 
-  btnInserisci_Click() { 
-    
+  async btnInserisci_Click() { 
+    const book = new Book(1034, "autore", "country", 234, "titolo", 1967);
+
+    try {
+      await this.libriService.AddBook(book);
+     
+      alert("libro aggiunto con successo");
+      this.ngOnInit();
+    }
+    catch(e) {
+      alert("errore inserimento libro");
+    }
+
   }
 }
 

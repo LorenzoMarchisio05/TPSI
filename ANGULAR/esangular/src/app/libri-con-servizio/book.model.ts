@@ -1,4 +1,6 @@
 export class Book {
+    public static readonly Empty = new Book(0, '', '', 0, '', 0);
+
     public id: number;
     public author: string;
     public country: string;
