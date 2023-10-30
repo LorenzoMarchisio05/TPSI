@@ -1,6 +1,17 @@
 import { RecipeDifficulty } from "./RecipeDifficultyEnum";
 
 export class Recipe {
+    public static readonly Empty: Recipe = new Recipe(
+        -1, 
+        "", 
+        "",
+        [], 
+        [], 
+        -1, 
+        RecipeDifficulty.easy, 
+        ""
+        );
+
     Id: number;
     Name: string;
     Description: string;

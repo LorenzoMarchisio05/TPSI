@@ -1,0 +1,34 @@
+<div class="recipe-card">
+    <header class="recipe-header">
+        <img class="recipe-image" src="{{ recipe.UrlImage }}" alt="header-image">
+    </header>
+
+    <section class="recipe-info-section">
+        <h1 class="fit-content center recipe-name">{{ recipe.Name }}</h1>
+
+        <div class="inline-block w-100 center">
+            <div class="inline-block w-100">
+                <img src="../../assets/svg/silverware.svg" alt="" class="text-icon">
+                <span class="fit-content text-icon">1 Persona</span>
+            </div>
+            <div class="inline-block w-100">
+                <img src="../../assets/svg/clock.svg" alt="" class="text-icon">
+                <span class="fit-content text-icon"> {{ recipe.ExecutionTime }} minuti</span>
+            </div>
+        </div>
+
+        <h2>INGREDIENTS</h2>
+
+        <ul class="recipe-ingredients">
+            <li *ngFor="let ingredient of recipe.Ingredients">{{ingredient}}</li>
+        </ul>
+    </section>
+
+    <section class="recipe-instructions-section">
+        <h2> DIRECTIONS </h2>
+
+        <ul class="recipe-instructions">
+            <li *ngFor="let instruction of recipe.Instructions">{{instruction}}</li>
+        </ul>
+    </section>
+</div>
