@@ -21,8 +21,7 @@ export class LibriService {
             resolve(data);
           },
           error: (err: any) => {
-            console.error(err);
-            reject(Book.Empty);
+            reject(err);
           }
         });
     });
@@ -37,8 +36,7 @@ export class LibriService {
             resolve(data);
           },
           error: (err: any) => {
-            console.error(err);
-            reject(Book.Empty);
+            reject(err);
           }
         });
     });
@@ -53,8 +51,7 @@ export class LibriService {
             resolve(book.id);
           },
           error: (err: any) => {
-            console.error(err);
-            reject(-1);
+            reject(err);
           }
         });
     });
@@ -69,8 +66,7 @@ export class LibriService {
             resolve(book.id);
           },
           error: (err: any) => {
-            console.error(err);
-            reject(-1);
+            reject(err);
           }
         });
     });
@@ -85,8 +81,7 @@ export class LibriService {
             resolve(id);
           },
           error: (err: any) => {
-            console.error(err);
-            reject(-1);
+            reject(err);
           }
         });
     });

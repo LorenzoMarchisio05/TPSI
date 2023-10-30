@@ -24,6 +24,7 @@ export class LibriConServizioComponent {
       this.headers = this.libri.length > 0 ? Object.keys(this.libri[0]) : [];
     } catch (e) {
       alert("errore caricamento libri");
+      console.error(e); 
     }
   }
 
@@ -34,6 +35,7 @@ export class LibriConServizioComponent {
       alert([id, author, country, pages, title, year].join(', '));
     } catch (e) {
         alert("errore recupero libro");
+        console.error(e);
     }
   }
 
@@ -45,6 +47,7 @@ export class LibriConServizioComponent {
       this.ngOnInit();
     } catch (e) {
       alert("errore eliminazione libro");
+      console.error(e);
     }
   }
 
@@ -57,6 +60,7 @@ export class LibriConServizioComponent {
       this.ngOnInit();
     } catch (e) {
       alert("errore aggiornamento libro");
+      console.error(e);
     }
   }
 
@@ -71,6 +75,7 @@ export class LibriConServizioComponent {
     }
     catch(e) {
       alert("errore inserimento libro");
+      console.error(e);
     }
 
   }
