@@ -2,7 +2,8 @@
   "name": "ricette-spa",
   "version": "0.0.0",
   "scripts": {
-    "start": "npm install && concurrently --names 'SERVER,CLIENT' --prefix-colors 'yellow,blue' --kill-others 'json-server --watch api/recipes.json' 'ng serve --open'"
+    "server": "npx json-server --watch api/recipes.json",
+	"start": "npx ng serve --open"
   },
   "private": true,
   "dependencies": {
@@ -15,6 +16,7 @@
     "@angular/platform-browser-dynamic": "^16.2.0",
     "@angular/router": "^16.2.0",
     "concurrently": "^8.2.2",
+    "json-server": "^0.17.4",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
