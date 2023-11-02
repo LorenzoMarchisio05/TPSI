@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { DataStorageService } from './data-storage.service';
 
-import { Recipe } from '../models/recipe';
+import { Recipe } from '../models/Recipe';
+import { RecipeHeader } from '../models/RecipeHeader';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,18 @@ export class RecipesService {
     public GetRecipes(): Promise<Recipe[]> { 
       return new Promise<Recipe[]>((resolve, reject) => {
         this.dataStorageService.Get(this.endpoint).subscribe({
+          next: (data: any) => {
+              resolve(data);
+          },
+
+          error: reject,
+        })
+      });
+    }
+
+    public GetRecipesHeader(): Promise<RecipeHeader[]> {
+      return new Promise<Recipe[]>((resolve, reject) => {
+        this.dataStorageService.Get(`${this.endpoint}/headers/`).subscribe({
           next: (data: any) => {
               resolve(data);
           },
