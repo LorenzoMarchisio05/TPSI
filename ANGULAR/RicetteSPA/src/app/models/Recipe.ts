@@ -1,4 +1,4 @@
-import { RecipeDifficulty } from "./RecipeDifficultyEnum";
+import { RecipeDifficulty, GetRecipeDifficultyName } from "./RecipeDifficultyEnum";
 
 export class Recipe {
     public static readonly Empty: Recipe = new Recipe(
@@ -61,5 +61,9 @@ export class Recipe {
             difficulty, 
             urlImage,
         }).toString();
+    }
+
+    GetDifficultyString(): string {
+        return GetRecipeDifficultyName(this.Difficulty);
     }
 }

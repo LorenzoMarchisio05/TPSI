@@ -1,5 +1,5 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Recipe } from '../models/Recipe';
 import { RecipeDifficulty } from '../models/RecipeDifficultyEnum';
@@ -17,11 +17,18 @@ export class RecipeCardComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private recipesService: RecipesService
+    private router: Router,
+    private recipesService: RecipesService,
   ) {}
 
   async ngOnInit() {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id') || "");
+    this.id = parseInt(this.route.snapshot.paramMap.get('id') || "-1");
+
+    console.log(this.id);
+
+    if(Number.isNaN(this.id)) {
+      this.router.navigate(['not-found']);
+    }
 
     try
     {
@@ -29,6 +36,7 @@ export class RecipeCardComponent {
     }
     catch(err) {
       console.error(err);
+      this.router.navigate(['not-found']);
     }
 
     this.recipe =  new Recipe(
