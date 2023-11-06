@@ -1,8 +1,8 @@
 .recipe-card {
-    --info-bg: rgb(252 242 225);
-    --instructions-bg: rgb(255 255 255);
-    --title-color: rgb(0 0 0);
-    --text-color: rgb(15, 15, 15);
+    --info-bg: var(--accent);
+    --instructions-bg: var(--white);
+    --title-color: var(--black);
+    --text-color: var(accent-color);
 
     --line-height: 2ch;
     --font-size: 1.15rem;
@@ -15,6 +15,14 @@
     width: 650px;
     height: 750px;
     font-size: var(--font-size);
+    
+    box-shadow: 2px 2px 100px 10px rgb(0 0 0 / 0.7);
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
 }
 
 
@@ -22,6 +30,7 @@
     grid-row: 1;
     grid-column: span 2;
     color: var(--title-color);
+    position: relative;
 }
 
 .recipe-image {
@@ -29,6 +38,22 @@
     height: 100%;
     object-fit: cover;
     object-position: center;
+    position: relative;;
+}
+
+.close-button {
+    position: absolute;
+    z-index: 2;
+    top: 2px;
+    right: 2px;
+
+    border: none;
+    background-color: transparent;
+}
+
+.close-button-icon {
+    fill: var(--accent);
+    transform: scale(1.35);
 }
 
 .recipe-info-section, .recipe-instructions-section {
@@ -81,6 +106,10 @@
 
 
 
+.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
 
 .center {
     margin-inline: auto;

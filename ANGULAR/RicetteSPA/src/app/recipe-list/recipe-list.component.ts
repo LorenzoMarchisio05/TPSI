@@ -3,12 +3,12 @@ import { RecipeHeader } from '../models/RecipeHeader';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-recipe-list',
+  selector: 'recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent {
-  recipeHeaders: RecipeHeader[] = new Array(10)
+  recipeHeaders: RecipeHeader[] = new Array(25)
       .fill("")
       .map((_, i) => new RecipeHeader(
         i,

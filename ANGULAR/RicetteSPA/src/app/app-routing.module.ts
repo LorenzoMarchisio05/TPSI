@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AppComponent } from './app.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeCardComponent } from './recipe-card/recipe-card.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';

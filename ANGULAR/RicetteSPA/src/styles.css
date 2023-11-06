@@ -8,3 +8,20 @@
     box-sizing: border-box;
 }
 
+:root {
+    --accent: rgb(252 242 225);
+    --white:  rgb(255 255 255);
+    --black: rgb(0 0 0);
+    --accent-color: rgb(15, 15, 15);
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.recipe-list-section {
+    max-height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
