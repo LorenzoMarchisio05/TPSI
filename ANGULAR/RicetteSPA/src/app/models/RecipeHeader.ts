@@ -17,7 +17,9 @@ export class RecipeHeader {
     }
 
     static GetHeaders(): string[] {
-        return Object.getOwnPropertyNames(RecipeHeader.Empty).filter(prop => prop !== "Id");
+        return Object.getOwnPropertyNames(RecipeHeader.Empty)
+            .filter(prop => prop !== "Id")
+            .map(header => header.replace(/([A-Z])/g, ' $1'));
     }
 
     GetDifficultyString(): string {

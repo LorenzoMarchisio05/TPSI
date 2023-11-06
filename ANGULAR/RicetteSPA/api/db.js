@@ -1,32 +1,28 @@
-import { MongoClient, ServerApiVersion }  from 'mongodb';
+import mongoose, { mongo } from "mongoose";
 // admin
 // recipe_db_password
 
-const uri = "mongodb+srv://admin:recipe_db_password@recipes.hiaibot.mongodb.net/?retryWrites=true&w=majority";
-    // Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-        serverApi: {
-            version: ServerApiVersion.v1,
-            strict: true,
-            deprecationErrors: true,
-        }
-    });
+const username = "admin";
+const password = "recipe_db_password";
+const clusterName = "Project 0";
+const dbName = "recipes";
 
-async function run() {
-    try {
-        // Connect the client to the server	(optional starting in v4.7)
-        await client.connect();
-        // Send a ping to confirm a successful connection
-        await client.db("admin").command({ ping: 1 });
+const uri = `mongodb+srv://${username}:${password}@${clusterName}.mongodb.net/${dbName}?retryWrites=true&w=majority`;
+mongoose.connect(uri);
 
-        console.log("Pinged your deployment. You successfully connected to MongoDB!");
-    } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-    }
-}
+const recipeSchema = new mongoose.Schema({
+    Id: String,
+    Name: String,
+    Description: String,
+    Ingredients: [String],
+    Instructions: [String],
+    ExecutionTime: Number,
+    Difficulty: Number,
+    UrlImage: String,
+});
 
+mongoose.connection.once("open", () => {
+    console.log("connected to mongodb");
+});
 
-run().catch(console.dir);
-
-export { client };  
+export const recipe = mongoose.model("recipe", recipeSchema);
