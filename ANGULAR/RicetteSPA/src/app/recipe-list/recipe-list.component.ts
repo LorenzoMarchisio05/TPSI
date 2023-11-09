@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RecipeHeader } from '../models/RecipeHeader';
 import { Router } from '@angular/router';
+import { RecipesService } from '../services/recipes.service';
 
 @Component({
   selector: 'recipe-list',
@@ -8,19 +9,24 @@ import { Router } from '@angular/router';
   styleUrls: ['./recipe-list.component.css']
 })
 export class RecipeListComponent {
-  recipeHeaders: RecipeHeader[] = new Array(25)
-      .fill("")
-      .map((_, i) => new RecipeHeader(
-        i,
-        `name${i}`, 
-        Math.floor(Math.random() * (60 - 5) + 5), 
-        Math.floor(Math.random() * 3)));
+  recipeHeaders!: RecipeHeader[] 
 
   headers: string[] = RecipeHeader.GetHeaders();
 
   constructor(
     private router: Router,
+    private recipesService: RecipesService
   ) {}
+
+  async ngOnInit() {
+    try
+    {
+      this.recipeHeaders = await this.recipesService.GetRecipesHeader();
+    }
+    catch(err) {
+      console.error(err);
+    }
+  }
 
   rowClick(event: Event) {
     const target: HTMLElement = event.target as HTMLElement;

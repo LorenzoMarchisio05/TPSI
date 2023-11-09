@@ -9,7 +9,7 @@ import { RecipeHeader } from '../models/RecipeHeader';
 })
 export class RecipesService {
 
-  private readonly endpoint: string = "recipes/";
+  private readonly endpoint: string = "recipes";
 
   constructor(
     private dataStorageService: DataStorageService
@@ -19,7 +19,17 @@ export class RecipesService {
       return new Promise<Recipe[]>((resolve, reject) => {
         this.dataStorageService.Get(this.endpoint).subscribe({
           next: (data: any) => {
-              resolve(data);
+            const recipes = data.map((o: any) => new Recipe(
+                parseInt(o.Id), 
+                o.Name, 
+                o.Description, 
+                o.Ingredients,
+                o.Instructions,
+                o.ExecutionTime, 
+                o.Difficulty, 
+                o.UrlImage));
+
+              resolve(recipes);
           },
 
           error: reject,
@@ -28,10 +38,16 @@ export class RecipesService {
     }
 
     public GetRecipesHeader(): Promise<RecipeHeader[]> {
-      return new Promise<Recipe[]>((resolve, reject) => {
-        this.dataStorageService.Get(`${this.endpoint}/headers/`).subscribe({
+      return new Promise<RecipeHeader[]>((resolve, reject) => {
+        this.dataStorageService.Get(`headers/`).subscribe({
           next: (data: any) => {
-              resolve(data);
+              const recipeHeaders = data.map((o: any) => new RecipeHeader(
+                o.Id, 
+                o.Name,
+                o.ExecutionTime, 
+                o.Difficulty));
+              
+              resolve(recipeHeaders);
           },
 
           error: reject,
@@ -43,7 +59,17 @@ export class RecipesService {
       return new Promise<Recipe>((resolve, reject) => {
         this.dataStorageService.Get(`${this.endpoint}/${id}/`).subscribe({
           next: (data: any) => {
-              resolve(data);
+              const recipe =  new Recipe(
+                parseInt(data.Id), 
+                data.Name, 
+                data.Description, 
+                data.Ingredients,
+                data.Instructions,
+                data.ExecutionTime, 
+                data.Difficulty, 
+                data.UrlImage);
+
+              resolve(recipe);
           },
 
           error: reject,
