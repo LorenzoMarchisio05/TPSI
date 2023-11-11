@@ -5,6 +5,18 @@ export enum RecipeDifficulty {
     master = 3,
 };
 
-const RecipeDifficultyMap: string[] = Object.keys(RecipeDifficulty).filter((item) => isNaN(Number(item)));
+const recipeDifficultyArray: string[] = Object.keys(RecipeDifficulty).filter((item) => isNaN(Number(item)));
 
-export const GetRecipeDifficultyName = (difficulty: RecipeDifficulty): string => RecipeDifficultyMap[difficulty];
+const createNameValueMap = () => {
+    const map: any = {};
+
+    recipeDifficultyArray.forEach((name, i) => {
+        map[name] = i;
+    });
+
+    return map;
+}
+
+export const RecipeDifficultyMap = createNameValueMap();
+
+export const GetRecipeDifficultyName = (difficulty: RecipeDifficulty): string => recipeDifficultyArray[difficulty];

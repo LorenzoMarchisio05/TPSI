@@ -4,6 +4,7 @@
     </header>
     
     <main>
+        <recipe-search (searchEvent)="OnSearch($event)" />
         <table class="table table-hover list-items">
             <thead>
                 <tr>
@@ -15,8 +16,8 @@
             <tbody>
                 <tr 
                     class="list-item"
-                    *ngFor="let recipeHeader of recipeHeaders" 
-                    (click)="rowClick($event)" 
+                    *ngFor="let recipeHeader of filteredRecipeHeaders" 
+                    (click)="OnRowClick($event)" 
                     id="{{recipeHeader.Id}}" >
     
                     <td>
