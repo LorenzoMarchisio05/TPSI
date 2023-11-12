@@ -1,4 +1,5 @@
 import { RecipeDifficulty, GetRecipeDifficultyName } from "./RecipeDifficultyEnum";
+import { RecipeIngredient } from "./RecipeIngredient";
 
 export class Recipe {
     public static readonly Empty: Recipe = new Recipe(
@@ -15,7 +16,7 @@ export class Recipe {
     Id: number;
     Name: string;
     Description: string;
-    Ingredients: string[];
+    Ingredients: RecipeIngredient[];
     Instructions: string[];
     ExecutionTime: number;
     Difficulty: RecipeDifficulty;
@@ -25,7 +26,7 @@ export class Recipe {
         id: number,
         name: string, 
         description: string, 
-        ingredients: string[], 
+        ingredients: RecipeIngredient[], 
         instructions: string[], 
         executionTime: number, 
         difficulty: number, 

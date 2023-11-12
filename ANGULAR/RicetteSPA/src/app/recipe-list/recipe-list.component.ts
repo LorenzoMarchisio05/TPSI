@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { RecipeHeader } from '../models/RecipeHeader';
 import { Router } from '@angular/router';
 import { RecipesService } from '../services/recipes.service';
-import { RecipeDifficultyMap } from '../models/RecipeDifficultyEnum';
+import { RecipesSearchService } from '../services/recipes-search.service';
 
 @Component({
   selector: 'recipe-list',
@@ -20,7 +20,8 @@ export class RecipeListComponent {
 
   constructor(
     private router: Router,
-    private recipesService: RecipesService
+    private recipesService: RecipesService,
+    private recipeSearchService: RecipesSearchService,
   ) {}
 
   async ngOnInit() {
@@ -51,43 +52,19 @@ export class RecipeListComponent {
   }
 
   OnSearch(args: string) {
-    const query: string = args.toLowerCase();
+    const query: string = args.trim().toLowerCase();
 
-    const filteringFunction = (header: RecipeHeader) => {
-      const difficulty = header.Difficulty.toString();
-      const executionTime = header.ExecutionTime.toString();
-      const name = header.Name.toLowerCase();
-      const id = header.Id.toString();
+    this.filteredRecipeHeaders = this.recipeSearchService.search(this.recipeHeaders, query);
 
-      if(difficulty === query) {
-        return true;
-      }
-
-      if(header.Difficulty === RecipeDifficultyMap[query])
-      {
-        return true;
-      }
-
-      if(`${executionTime} minutes`.includes(query)) {
-        return true;
-      }
-
-      if(name.includes(query)) {
-        return true;
-      }
-
-      if(id === query) {
-        return true;
-      }
-
-      return false;
-    };
-
-    const filteredHeaders = this.recipeHeaders.filter(filteringFunction);
-
-    this.filteredRecipeHeaders = filteredHeaders;
+    if(this.filteredRecipeHeaders.length === 0) {
+      this.addNoRecipeFound();
+    }
 
     this.ngOnInit();
+  }
+
+  private addNoRecipeFound(message: string = "No recipes found") {
+    this.filteredRecipeHeaders.push({...RecipeHeader.Empty, Name: message} as RecipeHeader);
   }
 
 }

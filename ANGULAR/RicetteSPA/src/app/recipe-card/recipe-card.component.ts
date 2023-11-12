@@ -1,8 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Recipe } from '../models/Recipe';
-import { RecipeDifficulty } from '../models/RecipeDifficultyEnum';
 import { RecipesService } from '../services/recipes.service';
 
 @Component({
@@ -11,10 +10,9 @@ import { RecipesService } from '../services/recipes.service';
   styleUrls: ['./recipe-card.component.css']
 })
 export class RecipeCardComponent {
-  private rendered: boolean = false;
-
-  id!: number
+  private init: boolean = true;
   recipe!: Recipe;
+  view: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,29 +21,31 @@ export class RecipeCardComponent {
   ) { }
 
   async ngOnInit() {
-    this.id = parseInt(this.route.snapshot.paramMap.get('id') || "-1");
+    if(this.init) {
+      const id = parseInt(this.route.snapshot.paramMap.get('id') || "-1");
 
-    if(Number.isNaN(this.id) || this.id === -1) {
-      this.router.navigate(['not-found']);
-    }
+      if(Number.isNaN(id) || id === -1) {
+        this.router.navigate(['not-found']);
+      }
+  
+      try
+      {
+        this.recipe = await this.recipesService.GetRecipe(id);
+      }
+      catch(err) {
+        console.error(err);
+      }
+  
+      document.querySelectorAll('.disabled').forEach((element: any) => element.classList.remove('disabled'));
 
-    try
-    {
-      this.recipe = await this.recipesService.GetRecipe(this.id);
-    }
-    catch(err) {
-      console.error(err);
-    }
-
-    this.rendered = true;
-    document.querySelectorAll('.disabled').forEach((element: any) => element.classList.remove('disabled'))
-  }
-
-  onCloseButtonClick() {
-    if(!this.rendered) {
+      this.init = false;
       return;
     }
-    this.router.navigate(['recipe-list']);
+  }
+
+  OnEditRecipe() {
+    this.view = !this.view;
+    this.ngOnInit();
   }
 }
 

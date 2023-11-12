@@ -19,17 +19,20 @@
                     *ngFor="let recipeHeader of filteredRecipeHeaders" 
                     (click)="OnRowClick($event)" 
                     id="{{recipeHeader.Id}}" >
-    
-                    <td>
+
+                    <td *ngIf="recipeHeader.Id !== -1">
                         {{ recipeHeader.Name }}
                     </td>
-                    <td>
+                    <td *ngIf="recipeHeader.Id !== -1">
                         {{ recipeHeader.ExecutionTime }} minutes
                     </td>
-                    <td>
+                    <td *ngIf="recipeHeader.Id !== -1">
                         {{ recipeHeader.GetDifficultyString() }}
                     </td>
-    
+                    
+                    <td *ngIf="recipeHeader.Id === -1" colspan="3">
+                        {{ recipeHeader.Name }}
+                    </td>
                 </tr>
             </tbody>
         </table>

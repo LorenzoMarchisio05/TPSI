@@ -45,7 +45,8 @@ export class RecipesService {
                 o.Id, 
                 o.Name,
                 o.ExecutionTime, 
-                o.Difficulty));
+                o.Difficulty,
+                    o.Ingredients));
               
               resolve(recipeHeaders);
           },

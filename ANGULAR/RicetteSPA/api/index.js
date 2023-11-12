@@ -1,18 +1,37 @@
 import express from 'express';
 
-const recipes = [
+let recipes = [
   {
     "Id": 1,
     "Name": "Pumpkin soup",
     "Description":  "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit pariatur neque iure modi, ducimus dignissimos iusto dolorum dolores quia reiciendis odit, doloremque explicabo aliquid veniam!",
     "Ingredients": [
-      "2 Lorem ipsum dolor sit amet ", 
-      "1 consectetur adipisicing elit. ", 
-      "1 Sit pariatur neque iure modi" , 
-      "2 ducimus dignissimos iusto dolorum dolores", 
-      "4 quia reiciendis odit", 
-      "1 doloremque explicabo aliquid veniam!"
-    ],
+				{
+					"quantity": 100,
+					"measure": "gr",
+					"name": "Lorem ipsum dolor sit amet"
+				},
+				{
+					"quantity": 40,
+					"measure": "gr",
+					"name": "Lorem ipsum dolor sit amet"
+				},
+				{
+					"quantity": 26,
+					"measure": "gr",
+					"name": "Lorem ipsum dolor sit amet"
+				},
+				{
+					"quantity": 150,
+					"measure": "gr",
+					"name": "Lorem ipsum dolor sit amet"
+				},
+				{
+					"quantity": 18,
+					"measure": "gr",
+					"name": "Lorem ipsum dolor sit amet"
+				}
+			],
     "Instructions": [
       "Lorem ipsum dolor sit amet ", 
       "consectetur adipisicing elit. ", 
@@ -30,12 +49,31 @@ const recipes = [
     "Name": "Pumpkin pie",
     "Description":  "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sit pariatur neque iure modi, ducimus dignissimos iusto dolorum dolores quia reiciendis odit, doloremque explicabo aliquid veniam!",
     "Ingredients": [
-      "2 Lorem ipsum dolor sit amet ", 
-      "1 consectetur adipisicing elit. ", 
-      "1 Sit pariatur neque iure modi" , 
-      "2 ducimus dignissimos iusto dolorum dolores", 
-      "4 quia reiciendis odit", 
-      "1 doloremque explicabo aliquid veniam!"
+      {
+        "quantity": 100,
+        "measure": "gr",
+        "name": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "quantity": 40,
+        "measure": "gr",
+        "name": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "quantity": 26,
+        "measure": "gr",
+        "name": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "quantity": 150,
+        "measure": "gr",
+        "name": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "quantity": 18,
+        "measure": "gr",
+        "name": "Lorem ipsum dolor sit amet"
+      },
     ],
     "Instructions": [
       "pumpkin pie instructions 1",
@@ -52,18 +90,16 @@ const recipes = [
 ];
 
 const mapRecipeToRecipeHeaders = (recipe) => {
-  const{ Id, Name, ExecutionTime, Difficulty } = recipe
+  const{ Id, Name, ExecutionTime, Difficulty, Ingredients } = recipe
 
-  return { Id, Name, ExecutionTime, Difficulty, };
+  return { Id, Name, ExecutionTime, Difficulty, Ingredients, };
 };
 
-const recipeHeaders = recipes.map(mapRecipeToRecipeHeaders);
+let recipeHeaders = recipes.map(mapRecipeToRecipeHeaders);
 
 const error = {
   message: ""
 };
-
-console.log(recipes.length, recipeHeaders.length);
 
 const app = express();
 const port = 3000;
@@ -74,6 +110,12 @@ const setHeaders = (res) => {
   res.setHeader("Content-Type", "application/json");
 }
 
+const sendErrorMessage = (res, message, status = 404) => {
+  error.message = message;
+
+  res.status(status).send(JSON.stringify(error));
+}
+
 app.get("/", (req, res) => {
   res.redirect("/recipes");
 });
@@ -81,7 +123,9 @@ app.get("/", (req, res) => {
 app.get("/recipes/", (req, res) => {
   setHeaders(res);
 
-  res.send(JSON.stringify(recipes));
+  console.log("requested recipes");
+
+  res.status(200).send(JSON.stringify(recipes));
 });
 
 app.get("/recipes/:id/", (req, res) => {
@@ -91,14 +135,13 @@ app.get("/recipes/:id/", (req, res) => {
   const recipe = recipes.find(recipe => recipe.Id == id);
 
   if(!recipe) {
-    error.message = `No recipe found with id '${id}'`;
-
-    res.status(404)
-      .send(JSON.stringify(error));
+    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
     return;
   }
 
-  res.send(JSON.stringify(recipe));
+  console.log("requested recipe id:" + id);
+
+  res.status(200).send(JSON.stringify(recipe));
 });
 
 app.post("/recipes/", (req, res) => {
@@ -106,40 +149,75 @@ app.post("/recipes/", (req, res) => {
 
   const contentType = req.headers['content-type'];
   if(contentType !== "application/json") {
-    error.message = `Content type must be 'application/json'`;
-
-    res.status(404)
-      .send(JSON.stringify(error));
+    sendErrorMessage(res, `Content type must be 'application/json'`, 415);
     return;
   }
 
   const recipe = JSON.parse(req.body);
 
   if(!recipe) {
-    error.message = `Recipe is empty`;
-
-    res.status(404)
-      .send(JSON.stringify(error));
+    sendErrorMessage(res, `Recipe is empty`, 404);
     return;
   }
 
   recipes.push(recipe);
   recipeHeaders.push(mapRecipeToRecipeHeaders(recipe));
+
+  console.log("created recipe id: " + recipe.id);
+
+  res.status(201).send();
 });
+
+app.put("/recipes/:id/", (req, res) => {
+  setHeaders(res);
+  const id = req.params.id;
+
+  const contentType = req.headers['content-type'];
+  if(contentType !== "application/json") {
+    sendErrorMessage(res, `Content type must be 'application/json'`, 415);
+    return;
+  }
+
+  const oldRecipeIndex = recipes.findIndex(recipe => recipe.Id == id);
+
+  if(oldRecipeIndex === -1) {
+    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
+    return;
+  }
+
+  const newRecipe = JSON.parse(req.body);
+
+  recipes[oldRecipeIndex] = {
+    ...recipes[oldRecipeIndex],
+    ...newRecipe,
+  };
+
+  res.status(200).send();
+})
 
 app.delete("/recipes/:id/", (req, res) => {
   setHeaders(res);
-
   const id = req.params.id;
 
-  recipes.pop({ Id: id });
-  recipeHeaders.pop({ Id: id });
+  if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
+    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
+    return;
+  }
+
+  recipes = recipes.filter(recipe => recipe.Id != id);
+  recipeHeaders = recipeHeaders.filter(recipeHeader => recipeHeader.Id != id);
+
+  console.log("deleted recipe id: " + id);
+
+  res.status(200).send();
 });
 
 app.get("/headers/", (req, res) => {
   setHeaders(res);
 
-  res.send(JSON.stringify(recipeHeaders));
+  console.log("requested recipes headers");
+
+  res.status(200).send(JSON.stringify(recipeHeaders));
 })
 
 

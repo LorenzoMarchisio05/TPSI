@@ -4,14 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule, routingComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeSearchComponent } from './recipe-search/recipe-search.component';
+import { RecipeEditComponent } from './recipe-card/recipe-edit/recipe-edit.component';
+import { RecipeViewComponent } from './recipe-card/recipe-view/recipe-view.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ...routingComponents,
     RecipeSearchComponent,
+    RecipeEditComponent,
+    RecipeViewComponent,
   ],
   imports: [
     BrowserModule,
