@@ -14,11 +14,44 @@ export class RecipeEditComponent {
   @Output()
   EditRecipeEvent: EventEmitter<void> = new EventEmitter();
 
+  private txtName!: HTMLInputElement;
+  private txtExecutionTime!: HTMLInputElement;
+  private txtUrlImage!: HTMLInputElement;
+  private txtDescription!: HTMLTextAreaElement;
+
   ngOnInit() {
     console.log(this.recipe);
   }
 
+  ngAfterViewChecked() {
+    this.txtName = document.getElementById('txtName') as HTMLInputElement;
+    this.txtExecutionTime = document.getElementById('txtExecutionTime') as HTMLInputElement;
+    this.txtUrlImage = document.getElementById('txtUrlImage') as HTMLInputElement;
+    this.txtDescription = document.getElementById('txtDescription') as HTMLTextAreaElement;
+  }
+
   OnSave() {
+    const name: string = this.txtName.value.trim();
+    const executionTime: number = parseInt(this.txtExecutionTime.value);
+    const urlImage: string = this.txtUrlImage.value.trim();
+    const description: string = this.txtDescription.value.trim();
+
+    if(name != this.recipe.Name) {
+      this.recipe.Name = name;
+    }
+
+    if(executionTime != this.recipe.ExecutionTime) {
+      this.recipe.ExecutionTime = executionTime;
+    }
+
+    if(urlImage != this.recipe.UrlImage) {
+      this.recipe.UrlImage = urlImage;
+    }
+
+    if(description != this.recipe.Description) {
+      this.recipe.Description = description;
+    }
+
     this.EditRecipeEvent.emit();
   }
 }

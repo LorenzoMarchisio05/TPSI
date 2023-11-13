@@ -20,3 +20,20 @@
     justify-content: end;
     padding-block: 5px;
 }
+
+.edit-form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form .description {
+    flex-grow: 2;
+}
+
+.description > * {
+    width: 100%;
+    height: 100%;
+    resize: none;
+}

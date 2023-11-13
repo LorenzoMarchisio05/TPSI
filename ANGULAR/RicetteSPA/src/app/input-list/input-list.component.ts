@@ -6,34 +6,53 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./input-list.component.css']
 })
 export class InputListComponent {
-  @Input({ required: true })
-  dataSource!: object[];
-  options!: string[];
+  private init: boolean = true;
 
-  private select!: HTMLElement;
+  private inputElement!: HTMLInputElement;
+  private optionsElement!: HTMLElement;
+
+  @Input({ required: true })
+  dataSource!: (object | string | number)[];
+
+  @Input({ required: true })
+  label!: string;
+
+  options!: Set<string>;
+  filteredOptions!: Set<string>;
 
   ngOnInit() { 
-    this.options = this.getDataSourceAsStringArray();
-
-    this.select = document.getElementById("options")!;
+    if(this.init) {
+      this.options = this.getDataSourceAsSet();
+      this.filteredOptions = this.options;
+      this.init = false;
+    }
   }
 
-  OnFocus(e: Event) { 
-    this.select.classList.add("show");
+  ngAfterViewChecked() {
+    const wrapper = document.getElementsByClassName(`wrapper-${this.label}`)[0];
+    this.inputElement = wrapper.getElementsByClassName(`input-${this.label}`)[0] as HTMLInputElement;
+    this.optionsElement = wrapper.getElementsByClassName(`options-${this.label}`)[0] as HTMLElement;
   }
 
-  OnFocusOut(e: Event) { 
+  OnFocus() { 
+    this.optionsElement.classList.add("show");
+  }
+
+  OnFocusOut() { 
     this.closeOptions();
   }
 
   OnSelect(option: string) {
-    this.closeOptions();
-    console.log(option);
+    this.autoComplete(option);
   }
 
   OnDelete(option: string) {
     this.closeOptions();
-    console.log(option);
+    this.options.delete(option);
+
+    if(this.inputElement.value === option) {
+      this.inputElement.value = "";
+    }
   }
 
   OnKeyUp(e: KeyboardEvent) { 
@@ -42,31 +61,41 @@ export class InputListComponent {
 
     if("Enter" === e.code) {
       this.addIfNotExists(option);
+      this.closeOptions();
       return;
     }
 
-    console.log(option);
+    const filteredOptions = [...this.options].filter((o: string) => o.includes(option));
+    this.filteredOptions = new Set(filteredOptions);
+
+    this.ngOnInit();
   }
 
   private closeOptions() {
-    this.select.classList.remove("show");
+    this.optionsElement.classList.remove("show");
+    this.inputElement.blur();
   }
 
-  private getDataSourceAsStringArray(): string[] {
-    return this.dataSource.map(data => Object.values(data).join(" "));
+  private getDataSourceAsSet(): Set<string> {
+    return new Set<string>(this.dataSource.map(data => Object.values(data).join(" ")));
   }
 
-  private addIfNotExists(o: string): void {
+  private addIfNotExists(o: string) {
     const option = o.trim().toLowerCase();
 
     if(option === "") {
       return;
     }
 
-    if(this.options.includes(option)) {
+    if(this.options.has(option)) {
       return;
     }
 
-    this.options.push(option);
+    this.options.add(option);
+  }
+
+  private autoComplete(option: string) {
+    this.closeOptions();
+    this.inputElement.value = option;
   }
 }

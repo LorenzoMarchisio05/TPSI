@@ -2,33 +2,48 @@
     position: relative;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
-.input-wrapper #options {
+.input-wrapper .options {
     position: absolute;
     border: none;
     background-color: white;
 
-    width: max-content;
+    width: 100%;
     height: auto;
-    visibility: hidden;
+    display: none;
+    z-index: 50;
 
     top: 100%;
-    right: 0;
+    left: 0;
+
+    flex-direction: column;
 }
 
-.input-wrapper #options > * {
-    padding-inline: 5px;
-    visibility: hidden;
+.input-wrapper .options * {
+    padding: 2px 5px;
 }
 
-.input-wrapper #options.show {
-   visibility: visible;
-}
-
-.input-wrapper #options.show > .option-controls { 
+.input-wrapper .options .option-controls {
     display: flex;
-    visibility: visible;
+}
+
+.input-wrapper .options > *:hover {
+    border-block: 1px solid black;
+    margin-bottom: -1px;
+    margin-top: -1px;
+}
+
+.input-wrapper .options .option-value {
+    flex-grow: 2;
+}
+
+.input-wrapper .options.show {
+    display: block;
+}
+
+.input-wrapper .ptions.show .option-controls { 
     width: 100%;
     justify-content: space-between;
     align-items: center;

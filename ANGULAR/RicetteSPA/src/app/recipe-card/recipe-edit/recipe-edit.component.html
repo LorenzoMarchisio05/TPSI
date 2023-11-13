@@ -4,21 +4,33 @@
     </header>
     <main>
         <form class="edit-form">
-            <div class="mb-3">
-                <input type="text" class="form-control" id="txtName" [placeholder]="recipe.Name">
-              </div>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="txtName" [value]="recipe.Name" required>
+                <label for="txtName">Nome</label>
+            </div>
 
             <div class="form-floating mb-3">
-                <input type="number" class="form-control" id="txtExecutionTime" min="1" [value]="recipe.ExecutionTime">
-                <label for="floatingInput">Tempo di preparazione</label>
+                <input type="number" class="form-control" id="txtExecutionTime" min="1" [value]="recipe.ExecutionTime" required>
+                <label for="txtExecutionTime">Tempo di preparazione</label>
+            </div>
+
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="txtUrlImage" [value]="recipe.UrlImage" required>
+                <label for="txtUrlImage">URL Immmagine</label>
             </div>
 
             <div class="mb-3">
-                <input-list [dataSource]="recipe.Ingredients" />
+                <input-list [dataSource]="recipe.Ingredients" label="Ingredienti"/>
             </div>
 
-            <div>
-                <textarea class="form-control" id="txtDescription" [placeholder]="recipe.Description"></textarea>
+            <div class="mb-3">
+                <input-list [dataSource]="recipe.Instructions" label="Istruzioni"/>
+            </div>
+
+            <div class="form-floating description">
+                <textarea class="form-control" id="txtDescription" [value]="recipe.Description" required>
+                </textarea>
+                <label for="txtDescription">Descrizione</label>
             </div>
         </form>
     </main>
