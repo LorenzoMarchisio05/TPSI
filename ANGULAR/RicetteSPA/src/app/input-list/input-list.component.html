@@ -1,0 +1,18 @@
+<div class="input-wrapper" >
+    <input 
+        class="input"
+        type="text"
+        (focus)="OnFocus($event)" 
+        (focusout)="OnFocusOut($event)" 
+        (keyup)="OnKeyUp($event)" />
+    <div id="options">
+        <div *ngFor="let option of options" class="option-controls">
+            <span class="me-3" (click)="OnSelect(option)">
+                {{option}}
+            </span>
+            <button type="button" class="reset-button delete-button" (click)="OnDelete(option)">
+                <img src="../../assets/svg/delete.svg" alt="">
+            </button>
+        </div>
+    </div>    
+</div>

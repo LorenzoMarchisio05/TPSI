@@ -1,4 +1,4 @@
-.recipe-card {
+.recipe-view {
     --info-bg: var(--accent);
     --instructions-bg: var(--white);
     --title-color: var(--black);
@@ -36,10 +36,6 @@
     right: 2px;
 }
 
-.reset-button {
-    border: none;
-    background-color: transparent;
-}
 
 .close-button-icon {
     fill: var(--accent);
@@ -75,7 +71,7 @@
     margin: 0;
     padding: 0;
     max-height: 60%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -92,7 +88,7 @@
 .recipe-instructions {
     list-style-type: decimal;
     max-height: 85%;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
 }
 
@@ -107,31 +103,10 @@
     border-bottom: 1px solid var(--text-color);
 }
 
-.recipe-card .text-icon {
+.recipe-view .text-icon {
     height: var(--line-height);
     line-height: var(--line-height);
     vertical-align: middle;
 }
 
 
-
-.disabled {
-    opacity: 0.7;
-    cursor: not-allowed;
-}
-
-.center {
-    margin-inline: auto;
-}
-
-.inline-block {
-    display: inline-block;
-}
-
-.w-100 {
-    width: 100%;
-}
-
-.fit-content {
-    width: fit-content;
-}

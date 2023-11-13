@@ -25,3 +25,30 @@ html, body {
     overflow-x: hidden;
     overflow-y: auto;
 }
+
+
+.disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.center {
+    margin-inline: auto;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.fit-content {
+    width: fit-content;
+}
+
+.reset-button {
+    border: none;
+    background-color: transparent;
+}

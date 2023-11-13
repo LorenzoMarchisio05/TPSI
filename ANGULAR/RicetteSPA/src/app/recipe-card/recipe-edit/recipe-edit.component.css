@@ -1,0 +1,22 @@
+.recipe-edit {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    padding-block: 3px;
+}
+
+.recipe-edit > main {
+    flex-grow: 2;
+}
+
+.recipe-edit > * {
+    padding-inline: min(5%, 1.5rem);
+}
+
+.recipe-edit > footer {
+    display: flex;
+    justify-content: end;
+    padding-block: 5px;
+}

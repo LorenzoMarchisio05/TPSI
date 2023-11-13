@@ -12,7 +12,7 @@ import { RecipesService } from '../services/recipes.service';
 export class RecipeCardComponent {
   private init: boolean = true;
   recipe!: Recipe;
-  view: boolean = true;
+  view: boolean = false;
 
   constructor(
     private route: ActivatedRoute,

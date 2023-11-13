@@ -1,0 +1,35 @@
+.input-wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-wrapper #options {
+    position: absolute;
+    border: none;
+    background-color: white;
+
+    width: max-content;
+    height: auto;
+    visibility: hidden;
+
+    top: 100%;
+    right: 0;
+}
+
+.input-wrapper #options > * {
+    padding-inline: 5px;
+    visibility: hidden;
+}
+
+.input-wrapper #options.show {
+   visibility: visible;
+}
+
+.input-wrapper #options.show > .option-controls { 
+    display: flex;
+    visibility: visible;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}

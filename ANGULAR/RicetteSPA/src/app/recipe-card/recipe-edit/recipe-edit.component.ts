@@ -16,9 +16,9 @@ export class RecipeEditComponent {
 
   ngOnInit() {
     console.log(this.recipe);
+  }
 
-    setTimeout(() => {
-      this.EditRecipeEvent.emit();
-    }, 1000);
+  OnSave() {
+    this.EditRecipeEvent.emit();
   }
 }

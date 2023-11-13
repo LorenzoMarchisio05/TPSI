@@ -1,1 +1,31 @@
+<div class="recipe-edit">
+    <header>
+        <h1> Modifica - {{recipe.Name}} </h1>
+    </header>
+    <main>
+        <form class="edit-form">
+            <div class="mb-3">
+                <input type="text" class="form-control" id="txtName" [placeholder]="recipe.Name">
+              </div>
 
+            <div class="form-floating mb-3">
+                <input type="number" class="form-control" id="txtExecutionTime" min="1" [value]="recipe.ExecutionTime">
+                <label for="floatingInput">Tempo di preparazione</label>
+            </div>
+
+            <div class="mb-3">
+                <input-list [dataSource]="recipe.Ingredients" />
+            </div>
+
+            <div>
+                <textarea class="form-control" id="txtDescription" [placeholder]="recipe.Description"></textarea>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <button class="btn btn-success btn-save" (click)="OnSave()">
+            <img src="../../../assets/svg/tick.svg" alt="" class="text-icon me-1">
+            <span>Salva</span>
+        </button>
+    </footer>
+</div>
