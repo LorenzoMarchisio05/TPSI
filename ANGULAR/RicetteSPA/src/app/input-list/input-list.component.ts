@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+
+type dataSourceType = (object | string | number);
 
 @Component({
   selector: 'input-list',
@@ -12,10 +14,13 @@ export class InputListComponent {
   private optionsElement!: HTMLElement;
 
   @Input({ required: true })
-  dataSource!: (object | string | number)[];
+  dataSource!: dataSourceType[];
 
   @Input({ required: true })
   label!: string;
+
+  @Output()
+  DataSourceChangedEvent: EventEmitter<Set<string>> = new EventEmitter();
 
   options!: Set<string>;
   filteredOptions!: Set<string>;
@@ -38,7 +43,15 @@ export class InputListComponent {
     this.optionsElement.classList.add("show");
   }
 
-  OnFocusOut() { 
+  OnInputMouseLeave() { 
+    this.closeOptions();
+  }
+
+  OnOptionsMouseOver() {
+    this.optionsElement.classList.add("show");
+  }
+
+  OnOptionsMouseLeave() {
     this.closeOptions();
   }
 
@@ -49,6 +62,7 @@ export class InputListComponent {
   OnDelete(option: string) {
     this.closeOptions();
     this.options.delete(option);
+    this.DataSourceChangedEvent.emit(this.options);
 
     if(this.inputElement.value === option) {
       this.inputElement.value = "";
@@ -81,7 +95,8 @@ export class InputListComponent {
   }
 
   private addIfNotExists(o: string) {
-    const option = o.trim().toLowerCase();
+    const option = o.trim();
+    this.inputElement.value = "";
 
     if(option === "") {
       return;
@@ -92,6 +107,7 @@ export class InputListComponent {
     }
 
     this.options.add(option);
+    this.DataSourceChangedEvent.emit(this.options);
   }
 
   private autoComplete(option: string) {

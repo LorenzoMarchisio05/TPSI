@@ -15,8 +15,9 @@
     display: none;
     z-index: 50;
 
-    top: 100%;
+    top: calc(100% - 2px);
     left: 0;
+    border-radius: 0 0 5px 5px;
 
     flex-direction: column;
 }
@@ -31,17 +32,23 @@
 
 .input-wrapper .options > *:hover {
     border-block: 1px solid black;
-    margin-bottom: -1px;
     margin-top: -1px;
 }
 
 .input-wrapper .options .option-value {
     flex-grow: 2;
+    border-radius: 0;
+    border: unset;
+    line-height: unset;
+    color: unset;
 }
 
 .input-wrapper .options.show {
     display: block;
+    border-top: none;
+    margin-top: unset;
 }
+
 
 .input-wrapper .ptions.show .option-controls { 
     width: 100%;

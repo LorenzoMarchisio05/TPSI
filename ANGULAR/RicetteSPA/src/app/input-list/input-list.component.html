@@ -5,14 +5,19 @@
         [ngClass]="'input-'.concat(label)"
         type="text"
         (focus)="OnFocus()" 
-        (focusout)="OnFocusOut()" 
+        (mouseleave)="OnInputMouseLeave()"
         (keyup)="OnKeyUp($event)" />
 
         <label for="input">{{label}}</label>
     </div>
-    <div class="options" [ngClass]="'options-'.concat(label)">
-        <div *ngFor="let option of filteredOptions" class="option-controls">
-            <span class="me-3 option-value" (click)="OnSelect(option)">
+    <div 
+        class="options" 
+        [ngClass]="'options-'.concat(label)" 
+        (mouseover)="OnOptionsMouseOver()" 
+        (mouseleave)="OnOptionsMouseLeave()"
+        >
+        <div *ngFor="let option of filteredOptions" class="form-control option-controls">
+            <span class="option-value" (click)="OnSelect(option)">
                 {{option}}
             </span>
             <button type="button" class="reset-button delete-button" (click)="OnDelete(option)">

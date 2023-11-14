@@ -1,6 +1,7 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Recipe } from 'src/app/models/Recipe';
+import { MapStringToIngredient } from 'src/app/models/RecipeIngredient';
 
 @Component({
   selector: 'recipe-edit',
@@ -19,15 +20,19 @@ export class RecipeEditComponent {
   private txtUrlImage!: HTMLInputElement;
   private txtDescription!: HTMLTextAreaElement;
 
-  ngOnInit() {
-    console.log(this.recipe);
-  }
-
   ngAfterViewChecked() {
     this.txtName = document.getElementById('txtName') as HTMLInputElement;
     this.txtExecutionTime = document.getElementById('txtExecutionTime') as HTMLInputElement;
     this.txtUrlImage = document.getElementById('txtUrlImage') as HTMLInputElement;
     this.txtDescription = document.getElementById('txtDescription') as HTMLTextAreaElement;
+  }
+
+  OnIngredientsChanged(newData: Set<string>) {
+    this.recipe.Ingredients = [...newData].map(ingredient => MapStringToIngredient(ingredient));
+  }
+
+  OnInstructionsChanged(newData: Set<string>) {
+    this.recipe.Instructions = [...newData];
   }
 
   OnSave() {
@@ -52,6 +57,10 @@ export class RecipeEditComponent {
       this.recipe.Description = description;
     }
 
+    this.EditRecipeEvent.emit();
+  }
+
+  OnDiscardChanges() {
     this.EditRecipeEvent.emit();
   }
 }
