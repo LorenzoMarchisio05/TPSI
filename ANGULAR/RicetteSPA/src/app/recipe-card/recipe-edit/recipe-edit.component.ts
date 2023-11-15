@@ -41,19 +41,24 @@ export class RecipeEditComponent {
     const urlImage: string = this.txtUrlImage.value.trim();
     const description: string = this.txtDescription.value.trim();
 
-    if(name != this.recipe.Name) {
+    const nameChanged = name != this.recipe.Name;
+    const executionTimeChanged = executionTime != this.recipe.ExecutionTime;
+    const urlImageChanged = urlImage != this.recipe.UrlImage;
+    const descriptionChanged = description != this.recipe.Description;  
+
+    if(nameChanged) {
       this.recipe.Name = name;
     }
 
-    if(executionTime != this.recipe.ExecutionTime) {
+    if(executionTimeChanged) {
       this.recipe.ExecutionTime = executionTime;
     }
 
-    if(urlImage != this.recipe.UrlImage) {
+    if(urlImageChanged) {
       this.recipe.UrlImage = urlImage;
     }
 
-    if(description != this.recipe.Description) {
+    if(descriptionChanged) {
       this.recipe.Description = description;
     }
 
@@ -61,6 +66,26 @@ export class RecipeEditComponent {
   }
 
   OnDiscardChanges() {
-    this.EditRecipeEvent.emit();
+    const name: string = this.txtName.value.trim();
+    const executionTime: number = parseInt(this.txtExecutionTime.value);
+    const urlImage: string = this.txtUrlImage.value.trim();
+    const description: string = this.txtDescription.value.trim();
+
+    const nameChanged = name != this.recipe.Name;
+    const executionTimeChanged = executionTime != this.recipe.ExecutionTime;
+    const urlImageChanged = urlImage != this.recipe.UrlImage;
+    const descriptionChanged = description != this.recipe.Description;  
+
+    const anyChange = nameChanged 
+      || executionTimeChanged
+      || urlImageChanged
+      || descriptionChanged;
+
+    if(!anyChange) {
+      this.EditRecipeEvent.emit();
+      return;
+    }
+    
+    // handle alert changes
   }
 }

@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeCardComponent } from './recipe-card/recipe-card.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/recipe-list', pathMatch: 'full'},
-  { path: 'recipe-list', component: RecipeListComponent },
+  { path: '', redirectTo: '/home', pathMatch: 'full'},
+  { path: 'home', component: HomeComponent },
   { path: 'recipe/:id', component: RecipeCardComponent },
   { path: 'not-found', component: PageNotFoundComponent},
   { path: '**', redirectTo: 'not-found'},
@@ -17,4 +17,4 @@ const routes: Routes = [
 })
 export class AppRoutingModule { }
 
-export const routingComponents = [RecipeListComponent, RecipeCardComponent, PageNotFoundComponent]
+export const routingComponents = [RecipeCardComponent, PageNotFoundComponent]

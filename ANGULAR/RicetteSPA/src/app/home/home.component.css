@@ -1,0 +1,25 @@
+:root {
+    --accent-bg: var(--accent);
+    --base-bg: var(--base);
+}
+
+.header, .footer {
+    background-color: var(--accent-bg);
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+.header {
+
+}
+
+.main {
+    flex-grow: 2;
+}
+
+.footer {
+
+}

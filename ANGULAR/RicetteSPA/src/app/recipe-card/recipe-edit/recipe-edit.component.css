@@ -18,7 +18,8 @@
 .recipe-edit > footer {
     display: flex;
     justify-content: end;
-    padding-block: 5px;
+    padding-block: 4px;
+    margin-top: 10px;
 }
 
 .edit-form {

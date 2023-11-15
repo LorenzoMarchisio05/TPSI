@@ -35,7 +35,7 @@ export class RecipeViewComponent {
   }
 
   OnCloseButtonClick() {
-    this.router.navigate(['recipe-list']);
+    this.router.navigate(['']);
   }
 
   OnDeleteButtonClick() {
