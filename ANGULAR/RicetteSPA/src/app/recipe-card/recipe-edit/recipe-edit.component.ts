@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { Recipe } from 'src/app/models/Recipe';
 import { MapStringToIngredient } from 'src/app/models/RecipeIngredient';
+import { RecipesService } from 'src/app/services/recipes.service';
 
 @Component({
   selector: 'recipe-edit',
@@ -19,6 +20,8 @@ export class RecipeEditComponent {
   private txtExecutionTime!: HTMLInputElement;
   private txtUrlImage!: HTMLInputElement;
   private txtDescription!: HTMLTextAreaElement;
+
+  constructor(private recipesService: RecipesService) { }
 
   ngAfterViewChecked() {
     this.txtName = document.getElementById('txtName') as HTMLInputElement;
@@ -61,6 +64,8 @@ export class RecipeEditComponent {
     if(descriptionChanged) {
       this.recipe.Description = description;
     }
+
+    this.recipesService.UpdateRecipe(this.recipe);
 
     this.EditRecipeEvent.emit();
   }
