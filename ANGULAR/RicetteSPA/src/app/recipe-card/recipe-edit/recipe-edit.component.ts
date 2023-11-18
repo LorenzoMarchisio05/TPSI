@@ -64,7 +64,6 @@ export class RecipeEditComponent {
     if(descriptionChanged) {
       this.recipe.Description = description;
     }
-
     this.recipesService.UpdateRecipe(this.recipe);
 
     this.EditRecipeEvent.emit();
@@ -90,7 +89,7 @@ export class RecipeEditComponent {
       this.EditRecipeEvent.emit();
       return;
     }
-    
-    // handle alert changes
+
+    this.EditRecipeEvent.emit();
   }
 }

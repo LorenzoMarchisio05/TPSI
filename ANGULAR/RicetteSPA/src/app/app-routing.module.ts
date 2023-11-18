@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { RecipeCardComponent } from './recipe-card/recipe-card.component';
+import { RecipeAddComponent } from './recipe-add/recipe-add.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full'},
   { path: 'home', component: HomeComponent },
   { path: 'recipe/:id', component: RecipeCardComponent },
+  { path: 'recipe-add', component: RecipeAddComponent },
   { path: 'not-found', component: PageNotFoundComponent},
   { path: '**', redirectTo: 'not-found'},
 ];

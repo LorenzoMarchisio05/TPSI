@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { DataStorageService } from './data-storage.service';
 
 import { Recipe } from '../models/Recipe';
 import { RecipeHeader } from '../models/RecipeHeader';
@@ -8,110 +7,147 @@ import { RecipeHeader } from '../models/RecipeHeader';
   providedIn: 'root'
 })
 export class RecipesService {
-
+  private readonly host: string = 'http://127.0.0.1:3000';
   private readonly endpoint: string = "recipes";
 
-  constructor(
-    private dataStorageService: DataStorageService
-  ) { }
+    public async GetRecipes() { 
+      const options = {
+        method: 'GET',
+      };
 
-    public GetRecipes(): Promise<Recipe[]> { 
-      return new Promise<Recipe[]>((resolve, reject) => {
-        this.dataStorageService.Get(this.endpoint).subscribe({
-          next: (data: any) => {
-            const recipes = data.map((o: any) => new Recipe(
-                parseInt(o.Id), 
-                o.Name, 
-                o.Description, 
-                o.Ingredients,
-                o.Instructions,
-                o.ExecutionTime, 
-                o.Difficulty, 
-                o.UrlImage));
+      try
+      {
+        const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
-              resolve(recipes);
-          },
+        const data = await response.json();
 
-          error: reject,
-        })
-      });
+        const recipes = data.map((o: any) => new Recipe(
+          parseInt(o.Id), 
+          o.Name, 
+          o.Description, 
+          o.Ingredients,
+          o.Instructions,
+          o.ExecutionTime, 
+          o.Difficulty, 
+          o.UrlImage));
+
+        return recipes;
+      }
+      catch(err) 
+      {
+        return [];
+      }
     }
 
-    public GetRecipesHeader(): Promise<RecipeHeader[]> {
-      return new Promise<RecipeHeader[]>((resolve, reject) => {
-        this.dataStorageService.Get(`headers/`).subscribe({
-          next: (data: any) => {
-              const recipeHeaders = data.map((o: any) => new RecipeHeader(
-                o.Id, 
-                o.Name,
-                o.ExecutionTime, 
-                o.Difficulty,
-                    o.Ingredients));
-              
-              resolve(recipeHeaders);
-          },
+    public async GetRecipesHeader() {
+      const options = {
+        method: 'GET',
+      };
 
-          error: reject,
-        })
-      });
+      try
+      {
+        const response = await fetch(`${this.host}/${this.endpoint}/`, options);
+
+        const data = await response.json();
+
+        const recipeHeaders = data.map((o: any) => new RecipeHeader(
+          o.Id, 
+          o.Name,
+          o.ExecutionTime, 
+          o.Difficulty,
+          o.Ingredients));
+
+        return recipeHeaders;
+      }
+      catch(err) 
+      {
+        return [];
+      }
     }
 
-    public GetRecipe(id: number): Promise<Recipe> { 
-      return new Promise<Recipe>((resolve, reject) => {
-        this.dataStorageService.Get(`${this.endpoint}/${id}/`).subscribe({
-          next: (data: any) => {
-              const recipe =  new Recipe(
-                parseInt(data.Id), 
-                data.Name, 
-                data.Description, 
-                data.Ingredients,
-                data.Instructions,
-                data.ExecutionTime, 
-                data.Difficulty, 
-                data.UrlImage);
+    public async GetRecipe(id: number) { 
+      const options = {
+        method: 'GET',
+      };
 
-              resolve(recipe);
-          },
+      try
+      {
+        const response = await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
 
-          error: reject,
-        })
-      });
+        const data = await response.json();
+
+        const recipe =  new Recipe(
+          parseInt(data.Id), 
+          data.Name, 
+          data.Description, 
+          data.Ingredients,
+          data.Instructions,
+          data.ExecutionTime, 
+          data.Difficulty, 
+          data.UrlImage);
+
+        return recipe;
+      }
+      catch(err) 
+      {
+        return Recipe.Empty;
+      }
     }
 
-    public AddRecipe(recipe: Recipe): Promise<number> { 
-      return new Promise<number>((resolve, reject) => { 
-        this.dataStorageService.Post(this.endpoint, recipe).subscribe({
-          next: (data: any) => {
-              resolve(data);
-          },
+    public async AddRecipe(recipe: Recipe) { 
+      const options = {
+        method: 'POST',
+        body: JSON.stringify(recipe),
+      };
 
-          error: reject,
-        })
-      })
+      try
+      {
+        await fetch(`${this.host}/${this.endpoint}/`, options);
+
+        return recipe.Id;
+      }
+      catch(err) 
+      {
+        return -1;
+      }
     }
 
-    public UpdateRecipe(recipe: Recipe): Promise<number> { 
-      return new Promise<number>((resolve, reject) => { 
-        this.dataStorageService.Put(`${this.endpoint}/${recipe.Id}/`, recipe).subscribe({
-          next: () => {
-              resolve(recipe.Id);
-          },
+    public async UpdateRecipe(recipe: Recipe) { 
+      const options = {
+        method: 'PUT',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(recipe),
+      };
 
-          error: reject,
-        })
-      })
+      try
+      {
+        await fetch(`${this.host}/${this.endpoint}/${recipe.Id}/`, options);
+
+        return recipe.Id;
+      }
+      catch(err) 
+      {
+        return -1;
+      }
     }
 
-    public DeleteRecipe(id: number): Promise<number> { 
-      return new Promise<number>((resolve, reject) => { 
-        this.dataStorageService.Delete(`${this.endpoint}/${id}/`).subscribe({
-          next: () => {
-              resolve(id);
-          },
+    public async DeleteRecipe(id: number) { 
+      const options = {
+        method: 'DELETE',
+      };
 
-          error: reject,
-        })
-      })
+      try
+      {
+        await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
+
+        return id;
+      }
+      catch(err) 
+      {
+        return -1;
+      }
     }
 
 }

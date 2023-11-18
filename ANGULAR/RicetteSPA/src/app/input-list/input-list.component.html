@@ -1,8 +1,8 @@
-<div class="input-wrapper" [ngClass]="'wrapper-'.concat(label)">
+<div class="input-wrapper" [ngClass]="'wrapper-'.concat(label).concat(id.toString())">
     <div class="form-floating">
         <input 
         class="input form-control"
-        [ngClass]="'input-'.concat(label)"
+        [ngClass]="'input-'.concat(label).concat(id.toString())"
         type="text"
         (focus)="OnFocus()" 
         (mouseleave)="OnInputMouseLeave()"
@@ -12,7 +12,7 @@
     </div>
     <div 
         class="options" 
-        [ngClass]="'options-'.concat(label)" 
+        [ngClass]="'options-'.concat(label).concat(id.toString())" 
         (mouseover)="OnOptionsMouseOver()" 
         (mouseleave)="OnOptionsMouseLeave()"
         >

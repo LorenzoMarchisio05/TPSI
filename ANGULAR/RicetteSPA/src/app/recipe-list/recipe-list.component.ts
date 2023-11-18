@@ -36,7 +36,10 @@ export class RecipeListComponent {
       }
 
       this.init = false;
-      return;
+    }
+
+    if(this.filteredRecipeHeaders.length === 0) {
+      this.addNoRecipeFound();
     }
   }
 
@@ -56,10 +59,6 @@ export class RecipeListComponent {
 
     this.filteredRecipeHeaders = this.recipeSearchService.search(this.recipeHeaders, query);
 
-    if(this.filteredRecipeHeaders.length === 0) {
-      this.addNoRecipeFound();
-    }
-
     this.ngOnInit();
   }
 
@@ -67,4 +66,7 @@ export class RecipeListComponent {
     this.filteredRecipeHeaders.push({...RecipeHeader.Empty, Name: message} as RecipeHeader);
   }
 
+  OnAddRecipeClick() {
+    this.router.navigate(['recipe-add']);
+  }
 }

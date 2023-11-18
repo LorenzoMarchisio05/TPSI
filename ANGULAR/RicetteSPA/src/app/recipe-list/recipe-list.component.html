@@ -29,6 +29,15 @@
                     {{ recipeHeader.Name }}
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <button class="reset-button add-recipe-button" 
+                    (click)="OnAddRecipeClick()">
+                        <img src="../../assets/svg/add.svg" alt="+">
+                        <span>Add Recipe</span>
+                    </button>
+                </td>
+            </tr>
         </tbody>
     </table>
 </section>

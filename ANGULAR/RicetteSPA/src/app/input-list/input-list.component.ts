@@ -8,6 +8,7 @@ type dataSourceType = (object | string | number);
   styleUrls: ['./input-list.component.css']
 })
 export class InputListComponent {
+  private static counter = 0;
   private init: boolean = true;
 
   private inputElement!: HTMLInputElement;
@@ -24,6 +25,11 @@ export class InputListComponent {
 
   options!: Set<string>;
   filteredOptions!: Set<string>;
+  id!: number;
+
+  constructor() {
+    this.id = InputListComponent.counter++;
+  }
 
   ngOnInit() { 
     if(this.init) {
@@ -34,9 +40,9 @@ export class InputListComponent {
   }
 
   ngAfterViewChecked() {
-    const wrapper = document.getElementsByClassName(`wrapper-${this.label}`)[0];
-    this.inputElement = wrapper.getElementsByClassName(`input-${this.label}`)[0] as HTMLInputElement;
-    this.optionsElement = wrapper.getElementsByClassName(`options-${this.label}`)[0] as HTMLElement;
+    const wrapper = document.getElementsByClassName(`wrapper-${this.label}${this.id}`)[0];
+    this.inputElement = wrapper.getElementsByClassName(`input-${this.label}${this.id}`)[0] as HTMLInputElement;
+    this.optionsElement = wrapper.getElementsByClassName(`options-${this.label}${this.id}`)[0] as HTMLElement;
   }
 
   OnFocus() { 

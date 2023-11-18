@@ -1,25 +1,40 @@
-:root {
+.wrapper {
     --accent-bg: var(--accent);
     --base-bg: var(--base);
+    --color: var(--base);
+
+    height: 150%;
+    display: flex;
+    flex-direction: column;
+}
+
+.wrapper > .background-image {
+    height: 150%;
 }
 
 .header, .footer {
-    background-color: var(--accent-bg);
-}
-
-body {
-    display: flex;
-    flex-direction: row;
+    padding-inline: max(1%, 5px);
+    font-family: var(--accent-font);
+    color: var(--color);
 }
 
 .header {
+    margin-top: 100px;
+    font-size: 8rem;
+    text-align: center;
+}
 
+.title {
+    font: inherit;
 }
 
 .main {
     flex-grow: 2;
+    margin-block: 10px;
 }
 
-.footer {
 
+.footer {  
+    text-align: center;
+    font-size: 2.75rem;
 }

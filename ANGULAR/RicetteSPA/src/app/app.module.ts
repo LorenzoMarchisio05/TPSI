@@ -10,6 +10,7 @@ import { RecipeViewComponent } from './recipe-card/recipe-view/recipe-view.compo
 import { InputListComponent } from './input-list/input-list.component';
 import { HomeComponent } from './home/home.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeAddComponent } from './recipe-add/recipe-add.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
     InputListComponent,
     RecipeListComponent,
     HomeComponent,
+    RecipeAddComponent,
   ],
   imports: [
     BrowserModule,

@@ -9,10 +9,11 @@
 }
 
 :root {
-    --accent: rgb(233, 218, 194);
+    --accent: rgb(242, 229, 208);
     --base:  rgb(255 255 255);
     --black: rgb(0 0 0);
     --accent-color: rgb(15, 15, 15);
+    --accent-font: 'DancingFont';
 }
 
 html, body {
@@ -26,6 +27,16 @@ html, body {
     overflow-y: auto;
 }
 
+.wrapper > .background-image {
+    position: absolute;
+
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+    object-position: center;
+}
 
 .disabled {
     opacity: 0.7;

@@ -1,0 +1,40 @@
+.recipe-add {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    padding-block: 3px;
+}
+
+.recipe-add > main {
+    flex-grow: 2;
+}
+
+.recipe-add > * {
+    padding-inline: min(5%, 1.5rem);
+}
+
+.recipe-add > footer {
+    display: flex;
+    justify-content: end;
+    padding-block: 4px;
+    margin-top: 10px;
+}
+
+.add-form {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.add-form .description {
+    flex-grow: 2;
+}
+
+.description > * {
+    width: 100%;
+    height: 100%;
+    resize: none;
+}

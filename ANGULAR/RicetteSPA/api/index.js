@@ -1,4 +1,5 @@
 import express from 'express';
+import bodyParser from 'body-parser';
 
 let recipes = [
   {
@@ -106,9 +107,23 @@ const port = 3000;
 
 const setHeaders = (res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT");
-  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT, OPTIONS");
 }
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+
+  next();
+}); 
+
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  }),
+);
 
 const sendErrorMessage = (res, message, status = 404) => {
   error.message = message;
@@ -122,6 +137,7 @@ app.get("/", (req, res) => {
 
 app.get("/recipes/", (req, res) => {
   setHeaders(res);
+  res.setHeader("Content-Type", "application/json");
 
   console.log("requested recipes");
 
@@ -130,6 +146,7 @@ app.get("/recipes/", (req, res) => {
 
 app.get("/recipes/:id/", (req, res) => {
   setHeaders(res);
+  res.setHeader("Content-Type", "application/json");
 
   const id = req.params.id;
   const recipe = recipes.find(recipe => recipe.Id == id);
@@ -153,7 +170,7 @@ app.post("/recipes/", (req, res) => {
     return;
   }
 
-  const recipe = JSON.parse(req.body);
+  const recipe = req.body;
 
   if(!recipe) {
     sendErrorMessage(res, `Recipe is empty`, 404);
@@ -185,12 +202,14 @@ app.put("/recipes/:id/", (req, res) => {
     return;
   }
 
-  const newRecipe = JSON.parse(req.body);
+  const newRecipe = req.body;
 
   recipes[oldRecipeIndex] = {
     ...recipes[oldRecipeIndex],
     ...newRecipe,
   };
+
+  console.log("updated recipe id: " + id);
 
   res.status(200).send();
 })
