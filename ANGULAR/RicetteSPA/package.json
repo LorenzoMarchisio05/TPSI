@@ -2,8 +2,9 @@
   "name": "ricette-spa",
   "version": "0.0.0",
   "scripts": {
-    "server": "npx json-server --watch api/recipes.json",
-    "start": "npx ng serve --open"
+    "server": "npx node api/index.js",
+    "client": "npx ng serve --open",
+    "start": "npx concurrently -n \"server,client\" -c \"yellow,white\" \"npm run server\" \"npm run client\""
   },
   "private": true,
   "dependencies": {
