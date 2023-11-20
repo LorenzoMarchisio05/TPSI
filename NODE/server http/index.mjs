@@ -1,31 +1,20 @@
-const http = require('http');
-
-const getEndpoints = Object.freeze({
-    "/" : get,
-    "/about": about,
-});
-
-const postEndpoints = Object.freeze({
-    "/api": api,
-});
-
-const endpoints = Object.freeze({
-    "GET": getEndpoints,
-    "POST": postEndpoints,
-});
+import http from 'http';
+import { endpoints } from './modules/endpoints.js';
 
 const port = 3000;
-const server = http.createServer((req, res) => {
+
+const server = http.createServer();
+
+server.on("request", (req, res) => {
     const header = {
         'Content-Type': 'text/plain',
     };
-    res.writeHead(200, header);
 
     // Handle
     const { url, method } = req;
     console.log("requested: " + url);
 
-    getter = endpoints[method];
+    const getter = endpoints[method];
 
     if(!getter) {
         res.writeHead(404, header);
@@ -39,27 +28,10 @@ const server = http.createServer((req, res) => {
         res.end("Pagina non trovata");
     }
 
+    res.writeHead(200, header);
     handler(req, res);
 
     res.end("");
 });
 
 server.listen(port, () => console.log("server listening on port " + port));
-
-// GET
-
-function get(req, res) {
-    res.write("hello");
-}
-
-function about(req, res) {
-    res.write("Informazioni sull'applicazione\n");
-}
-
-// POST
-
-function api(req, res) {
-    let body = '';
-    req.on('data', (data) => body += data);
-    req.on('end', () => res.end(`dati ricevuti: ${body}`));
-}

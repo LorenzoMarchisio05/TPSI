@@ -1,3 +1,6 @@
+import { get, about } from './get.js';
+import { api } from './post.js';
+
 const getEndpoints = Object.freeze({
     "/" : get,
     "/about": about,

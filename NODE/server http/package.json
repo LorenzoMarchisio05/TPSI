@@ -1,8 +1,9 @@
 {
   "name": "server-http",
   "version": "1.0.0",
-  "description": "",
+  "description": "I don't know what I'm doing (but I'm doing it really well), I like express so I'm sad",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node index.mjs"
   },

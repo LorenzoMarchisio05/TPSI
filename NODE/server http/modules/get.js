@@ -1,8 +1,8 @@
-const get = (req, res) =>  {
+function get (req, res) {
     res.write("hello");
 }
 
-const about = (req, res) => {
+function about (req, res) {
     res.write("Informazioni sull'applicazione\n");
 }
 
