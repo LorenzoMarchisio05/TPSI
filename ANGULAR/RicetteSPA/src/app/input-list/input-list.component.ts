@@ -37,6 +37,8 @@ export class InputListComponent {
       this.filteredOptions = this.options;
       this.init = false;
     }
+
+    console.log(this.options);
   }
 
   ngAfterViewChecked() {
@@ -102,6 +104,7 @@ export class InputListComponent {
 
   private addIfNotExists(o: string) {
     const option = o.trim();
+
     this.inputElement.value = "";
 
     if(option === "") {
@@ -109,10 +112,12 @@ export class InputListComponent {
     }
 
     if(this.options.has(option)) {
+      console.log("cè")
       return;
     }
 
     this.options.add(option);
+
     this.DataSourceChangedEvent.emit(this.options);
   }
 

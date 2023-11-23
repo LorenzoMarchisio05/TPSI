@@ -1,43 +1,22 @@
 <section class="container recipe-list-section">
-    <recipe-search (searchEvent)="OnSearch($event)" />
-    <table class="table table-hover list-items">
-        <thead>
-            <tr>
-                <th *ngFor="let header of headers">
-                    {{header}}
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr 
-                class="list-item"
-                *ngFor="let recipeHeader of filteredRecipeHeaders" 
-                (click)="OnRowClick($event)" 
-                id="{{recipeHeader.Id}}" >
+    <recipe-search (searchEvent)="OnSearch($event)" class="search-bar"/>
 
-                <td *ngIf="recipeHeader.Id !== -1">
-                    {{ recipeHeader.Name }}
-                </td>
-                <td *ngIf="recipeHeader.Id !== -1">
-                    {{ recipeHeader.ExecutionTime }} minutes
-                </td>
-                <td *ngIf="recipeHeader.Id !== -1">
-                    {{ recipeHeader.GetDifficultyString() }}
-                </td>
-                
-                <td *ngIf="recipeHeader.Id === -1" colspan="3">
-                    {{ recipeHeader.Name }}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3">
-                    <button class="reset-button add-recipe-button" 
-                    (click)="OnAddRecipeClick()">
-                        <img src="../../assets/svg/add.svg" alt="+">
-                        <span>Add Recipe</span>
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="list-items">
+        <list-item 
+            *ngFor="let recipeHeader of filteredRecipeHeaders"
+            [recipeHeader]="recipeHeader" 
+            (detailsRequest)="OnDetailClick($event)" />
+
+        <div class="no-recipe-found" *ngIf="filteredRecipeHeaders.length === 0">
+            <span>No Recipes Found</span>
+        </div>
+
+        <div class="add-recipe-button">
+            <button class="btn btn-primary" (click)="OnAddRecipeClick()">
+                <img src="../../assets/svg/add.svg" alt="">
+                <span>Add Recipe</span>
+            </button>
+        </div>
+
+    </div>
 </section>

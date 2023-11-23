@@ -1,14 +1,9 @@
 <div class="recipe-add">
     <header>
-        <h1> Add - {{recipe.Name}} </h1>
+        <h1> Add Recipe </h1>
     </header>
     <main>
         <form class="add-form">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="txtId" [value]="recipe.Id" required>
-                <label for="txtId">Id</label>
-            </div>
-
             <div class="form-floating mb-3">
                 <input type="text" class="form-control" id="txtName" [value]="recipe.Name" required>
                 <label for="txtName">Name</label>
@@ -47,7 +42,7 @@
 
         <button class="btn btn-success btn-save" (click)="OnSave()">
             <img src="../../../assets/svg/tick.svg" alt="" class="text-icon me-1">
-            <span>Save</span>
+            <span>Add</span>
         </button>
     </footer>
 </div>

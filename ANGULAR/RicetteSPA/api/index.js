@@ -91,9 +91,9 @@ let recipes = [
 ];
 
 const mapRecipeToRecipeHeaders = (recipe) => {
-  const{ Id, Name, ExecutionTime, Difficulty, Ingredients } = recipe
+  const{ Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage } = recipe
 
-  return { Id, Name, ExecutionTime, Difficulty, Ingredients, };
+  return { Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage};
 };
 
 let recipeHeaders = recipes.map(mapRecipeToRecipeHeaders);

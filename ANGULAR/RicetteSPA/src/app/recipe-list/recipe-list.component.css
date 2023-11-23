@@ -1,11 +1,52 @@
-.list-item {
-    cursor: pointer;
+.recipe-list-section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.add-recipe-button {
+.list-items {
     width: 100%;
-    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    column-gap: max(1%, 10px);
+    row-gap: max(1%, 10px);
+}
+
+.search-bar {
+    margin-inline: max(10%, 2rem);
+}
+
+.add-recipe-button,
+.no-recipe-found {
+    grid-column: 1 / span 2;
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
+.add-recipe-button {
+    width: 100%;
+}
+
+.no-recipe-found span {
+    background-color: var(--accent-bg);
+    transform: skew(-10deg);
+    font-size: 4rem;
+    font-family: var(--accent-font);
+    width: max-content;
+    padding: 2px 20px;
+    letter-spacing: 5px;
+}
+
+@media screen and (max-width: 900px ){
+    .list-items {
+        grid-template-columns: 1fr;
+        row-gap: 5px;
+    }
+    
+}
+

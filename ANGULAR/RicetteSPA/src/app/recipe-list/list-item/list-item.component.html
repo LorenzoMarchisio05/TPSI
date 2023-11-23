@@ -1,0 +1,21 @@
+<div class="card recipe-header-card">
+    <img class="image-left" [src]="recipeHeader.UrlImage" alt="" />
+
+    <div class="card-body">
+        <div>
+            <h3 class="card-title">{{recipeHeader.Name}}</h3>
+
+            <p class="card-text mb-0">
+                <b>Difficulty: </b>
+                <span>{{recipeHeader.GetDifficultyString()}}</span>
+            </p>
+            <p class="card-text">
+                <b>Execution Time: </b>
+                <span>{{recipeHeader.ExecutionTime}} minutes</span>
+            </p>
+        </div>
+        <button class="btn btn-primary" (click)="OnDetailClick()">
+            Details
+        </button>
+    </div>
+</div>

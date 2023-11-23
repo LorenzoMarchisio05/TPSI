@@ -8,7 +8,7 @@ export class Recipe {
         "",
         [], 
         [], 
-        -1, 
+        0, 
         RecipeDifficulty.easy, 
         ""
         );

@@ -3,13 +3,13 @@
     --base-bg: var(--base);
     --color: var(--base);
 
-    height: 150%;
+    height: 100%;
     display: flex;
     flex-direction: column;
 }
 
 .wrapper > .background-image {
-    height: 150%;
+    height: 100%;
 }
 
 .header, .footer {
@@ -19,8 +19,7 @@
 }
 
 .header {
-    margin-top: 100px;
-    font-size: 8rem;
+    font-size: 6rem;
     text-align: center;
 }
 
@@ -31,10 +30,12 @@
 .main {
     flex-grow: 2;
     margin-block: 10px;
+    max-height: 75%;
+    padding: 5px;
 }
 
 
 .footer {  
     text-align: center;
-    font-size: 2.75rem;
+    font-size: 2.25rem;
 }

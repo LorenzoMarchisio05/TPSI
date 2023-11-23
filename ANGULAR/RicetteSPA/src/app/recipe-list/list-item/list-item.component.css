@@ -1,0 +1,21 @@
+.recipe-header-card {
+    display: flex;
+    flex-direction: row;
+    border: none;
+
+    height: 13rem;
+    border-radius: 5px;
+}
+
+.image-left {
+    width: 40%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-inline: max(2%, 2rem);
+}

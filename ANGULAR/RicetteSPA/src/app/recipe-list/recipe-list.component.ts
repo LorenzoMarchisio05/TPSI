@@ -37,17 +37,10 @@ export class RecipeListComponent {
 
       this.init = false;
     }
-
-    if(this.filteredRecipeHeaders.length === 0) {
-      this.addNoRecipeFound();
-    }
   }
 
-  OnRowClick(event: Event) {
-    const target: HTMLElement = event.target as HTMLElement;
-    const id = target.parentElement!.id;
-
-    if(id === "-1") {
+  OnDetailClick(id: number) {
+    if(id === -1) {
       return;
     }
     
@@ -60,10 +53,6 @@ export class RecipeListComponent {
     this.filteredRecipeHeaders = this.recipeSearchService.search(this.recipeHeaders, query);
 
     this.ngOnInit();
-  }
-
-  private addNoRecipeFound(message: string = "No recipes found") {
-    this.filteredRecipeHeaders.push({...RecipeHeader.Empty, Name: message} as RecipeHeader);
   }
 
   OnAddRecipeClick() {

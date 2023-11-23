@@ -55,7 +55,8 @@ export class RecipesService {
           o.Name,
           o.ExecutionTime, 
           o.Difficulty,
-          o.Ingredients));
+          o.Ingredients,
+          o.UrlImage));
 
         return recipeHeaders;
       }
@@ -104,11 +105,11 @@ export class RecipesService {
       {
         await fetch(`${this.host}/${this.endpoint}/`, options);
 
-        return recipe.Id;
+        return true;
       }
       catch(err) 
       {
-        return -1;
+        return false;
       }
     }
 
@@ -125,11 +126,11 @@ export class RecipesService {
       {
         await fetch(`${this.host}/${this.endpoint}/${recipe.Id}/`, options);
 
-        return recipe.Id;
+        return true;
       }
       catch(err) 
       {
-        return -1;
+        return false;
       }
     }
 
@@ -142,11 +143,11 @@ export class RecipesService {
       {
         await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
 
-        return id;
+        return true;
       }
       catch(err) 
       {
-        return -1;
+        return false;
       }
     }
 
