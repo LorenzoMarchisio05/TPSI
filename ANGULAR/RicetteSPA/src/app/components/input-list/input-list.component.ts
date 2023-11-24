@@ -37,8 +37,6 @@ export class InputListComponent {
       this.filteredOptions = this.options;
       this.init = false;
     }
-
-    console.log(this.options);
   }
 
   ngAfterViewChecked() {
@@ -117,6 +115,7 @@ export class InputListComponent {
     }
 
     this.options.add(option);
+    this.filteredOptions = this.options;
 
     this.DataSourceChangedEvent.emit(this.options);
   }

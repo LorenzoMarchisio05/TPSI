@@ -1,9 +1,9 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Recipe } from '../../models/Recipe';
-import { RecipesService } from '../../services/recipes.service';
-import { RecipeIngredient } from '../../models/RecipeIngredient';
+import { Recipe } from '../../../models/Recipe';
+import { RecipesService } from '../../../services/recipes.service';
+import { RecipeIngredient } from '../../../models/RecipeIngredient';
 
 @Component({
   selector: 'recipe-view',

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { RecipeHeader } from '../models/RecipeHeader';
+import { RecipeHeader } from '../../models/RecipeHeader';
 import { Router } from '@angular/router';
-import { RecipesService } from '../services/recipes.service';
-import { RecipesSearchService } from '../services/recipes-search.service';
+import { RecipesService } from '../../services/recipes.service';
+import { RecipesSearchService } from '../../services/recipes-search.service';
 
 @Component({
   selector: 'recipe-list',

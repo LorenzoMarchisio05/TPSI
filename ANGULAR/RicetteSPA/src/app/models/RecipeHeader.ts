@@ -1,8 +1,15 @@
+import { Recipe } from "./Recipe";
 import { RecipeDifficulty, GetRecipeDifficultyName } from "./RecipeDifficultyEnum";
 import { RecipeIngredient } from "./RecipeIngredient";
 
 export class RecipeHeader {
-    static Empty: RecipeHeader = new RecipeHeader(-1, "", -1, 0, [], "");
+    static Empty: RecipeHeader = new RecipeHeader(
+        Recipe.Empty.Id, 
+        Recipe.Empty.Name, 
+        Recipe.Empty.ExecutionTime, 
+        Recipe.Empty.Difficulty, 
+        Recipe.Empty.Ingredients, 
+        Recipe.Empty.UrlImage);
 
     Id: number;
     Name: string;

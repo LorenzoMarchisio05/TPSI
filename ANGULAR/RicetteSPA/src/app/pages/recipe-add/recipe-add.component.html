@@ -1,0 +1,62 @@
+<section class="recipe-add">
+    <header>
+        <h1> Add Recipe </h1>
+    </header>
+    <main>
+        <section class="form">
+            <form class="add-form">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtName" [value]="recipe.Name" required (keyup)="OnTxtNameKeyUp($event)">
+                    <label for="txtName">Name</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <select class="form-select" (change)="OnDifficultyChanged($event)">
+                        <option *ngFor="let difficulty of difficulties; index as i" [value]="i">
+                            {{difficulty}}
+                        </option>
+                    </select>
+                    <label for="txtName">Difficulty</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="txtExecutionTime" min="1" [value]="recipe.ExecutionTime" required (change)="OnTxtExecutionTimeChanged($event)">
+                    <label for="txtExecutionTime">Execution Time</label>
+                </div>
+    
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="txtUrlImage" [value]="recipe.UrlImage" required (keyup)="OnTxtUrlImageKeyUp($event)">
+                    <label for="txtUrlImage">Image URL</label>
+                </div>
+    
+                <div class="mb-3">
+                    <input-list [dataSource]="recipe.Ingredients" label="Ingredients" (DataSourceChangedEvent)="OnIngredientsChanged($event)"/>
+                </div>
+    
+                <div class="mb-3">
+                    <input-list [dataSource]="recipe.Instructions" label="Instructions" (DataSourceChangedEvent)="OnInstructionsChanged($event)"/>
+                </div>
+    
+                <div class="form-floating description">
+                    <textarea class="form-control" id="txtDescription" [value]="recipe.Description" required (keyup)="OnTxtDescriptionKeyUp($event)">
+                    </textarea>
+                    <label for="txtDescription">Description</label>
+                </div>
+            </form>
+        </section>
+        <section class="preview">
+            <list-item [recipeHeader]="recipeHeader" />
+        </section>
+    </main>
+    <footer>
+        <button class="btn btn-warning me-2" (click)="OnDiscardChanges()">
+            <img src="../../../assets/svg/discardEdit.svg" alt="" class="text-icon me-1">
+            <span>Discard changes</span>
+        </button>
+
+        <button class="btn btn-success btn-save" (click)="OnSave()">
+            <img src="../../../assets/svg/tick.svg" alt="" class="text-icon me-1">
+            <span>Add</span>
+        </button>
+    </footer>
+</section>

@@ -4,13 +4,13 @@ import { RecipeIngredient } from "./RecipeIngredient";
 export class Recipe {
     public static readonly Empty: Recipe = new Recipe(
         -1, 
-        "", 
+        "Empty", 
         "",
         [], 
         [], 
         0, 
         RecipeDifficulty.easy, 
-        ""
+        "../../assets/images/empty-dish.jpg"
         );
 
     Id: number;

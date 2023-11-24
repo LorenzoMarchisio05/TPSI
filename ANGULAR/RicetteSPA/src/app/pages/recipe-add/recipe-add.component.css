@@ -5,10 +5,15 @@
     display: flex;
     flex-direction: column;
     padding-block: 3px;
+
+    background-color: var(--accent);
 }
 
 .recipe-add > main {
     flex-grow: 2;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .recipe-add > * {
@@ -20,6 +25,12 @@
     justify-content: end;
     padding-block: 4px;
     margin-top: 10px;
+}
+
+.recipe-add .preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .add-form {

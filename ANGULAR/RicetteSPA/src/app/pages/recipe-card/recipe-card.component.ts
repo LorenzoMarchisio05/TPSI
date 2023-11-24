@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { Recipe } from '../models/Recipe';
-import { RecipesService } from '../services/recipes.service';
+import { Recipe } from '../../models/Recipe';
+import { RecipesService } from '../../services/recipes.service';
 
 @Component({
   selector: 'recipe-card',

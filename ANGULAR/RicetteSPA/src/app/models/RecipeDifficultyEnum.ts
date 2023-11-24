@@ -20,3 +20,5 @@ const createNameValueMap = () => {
 export const RecipeDifficultyMap = createNameValueMap();
 
 export const GetRecipeDifficultyName = (difficulty: RecipeDifficulty): string => recipeDifficultyArray[difficulty];
+
+export const GetRecipeDifficultyNames = () => recipeDifficultyArray;
