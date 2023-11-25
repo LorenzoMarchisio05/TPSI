@@ -13,7 +13,6 @@ const setHeaders = (res) => {
 }
 
 // middleware 
-
 app.use((req, res, next) => {
   setHeaders(res);
   next();
