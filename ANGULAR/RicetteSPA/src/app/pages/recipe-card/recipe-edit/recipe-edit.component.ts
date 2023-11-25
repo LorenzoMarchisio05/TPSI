@@ -64,7 +64,9 @@ export class RecipeEditComponent {
     if(descriptionChanged) {
       this.recipe.Description = description;
     }
-    this.recipesService.UpdateRecipe(this.recipe);
+    this.recipesService.UpdateRecipe(this.recipe)
+      .then(console.log)
+      .catch(console.error);
 
     this.EditRecipeEvent.emit();
   }

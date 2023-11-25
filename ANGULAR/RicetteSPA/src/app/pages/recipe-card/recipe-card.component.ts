@@ -33,7 +33,7 @@ export class RecipeCardComponent {
         this.recipe = await this.recipesService.GetRecipe(id);
       }
       catch(err) {
-        console.error(err);
+        this.router.navigate(['not-found']);
       }
   
       document.querySelectorAll('.disabled').forEach((element: any) => element.classList.remove('disabled'));

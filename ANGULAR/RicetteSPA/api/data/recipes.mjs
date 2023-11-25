@@ -1,4 +1,4 @@
-export let recipes = [
+let recipes = [
     {
         Id: 1,
         Name: "Pumpkin soup",
@@ -87,13 +87,150 @@ export let recipes = [
     },
 ];
 
-const mapRecipeToRecipeHeaders = (recipe) => {
-    const{ Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage } = recipe
-    return { Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage};
-};
+class RecipeController
+{
+    #mapRecipeToRecipeHeaders(recipe) {
+        const{ Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage } = recipe
+        return { Id, Name, ExecutionTime, Difficulty, Ingredients, UrlImage};
+    };
 
-export function getInsertedRecipeId() {
-    return recipes.reduce((prev, current) => prev.Id > current.Id ? prev : current).Id + 1;
+    #GetInsertedRecipeId() {
+        return recipes.reduce((prev, current) => prev.Id > current.Id ? prev : current).Id + 1;
+    }
+
+    GetRecipes() {
+        return recipes;
+    }
+
+    GetRecipe(id) {
+        try {
+            const recipe = recipes.find(recipe => recipe.Id == id);
+
+            if(!recipe) {
+                throw new Error('recipe not found');
+            }
+
+            return {
+                success: true,
+                value: recipe,
+                message: "",
+                statusCode: 200,
+            }
+        }
+        catch(err) {
+            return {
+                success: false,
+                value: null,
+                message: err,
+                statusCode: 404,
+            }
+        }
+    }
+
+    GetRecipeHeaders() {  
+        try {
+            return {
+                success: true,
+                value: recipes.map(this.#mapRecipeToRecipeHeaders),
+                message: "",
+                statusCode: 200,
+            }
+        }
+        catch(err) {
+            return {
+                success: false,
+                value: "",
+                message: "",
+                statusCode: 500,
+            }
+        }
+    };
+
+    CreateRecipe(recipe) {
+        try {
+            recipe.Id = this.#GetInsertedRecipeId();
+            recipes.push(recipe);
+    
+            return {
+                success: true,
+                value: recipe.Id,
+                message: "",
+                statusCode: 201,
+            }
+        }
+        catch(err) {
+            return {
+                success: false,
+                value: null,
+                message: err,
+                statusCode: 500,
+            }
+        }
+    }
+
+    DeleteRecipe(id) {
+        try {
+            if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
+                return {
+                    success: false,
+                    value: null,
+                    message: `No recipe found with id '${id}'`,
+                    statusCode: 404,
+                }
+            }
+
+            recipes = recipes.filter(recipe => recipe.Id != id);
+
+            return {
+                success: true,
+                value: id,
+                message: "",
+                statusCode: 200,
+            }
+        }
+        catch(err) {
+            return {
+                success: false,
+                value: null,
+                message: err,
+                statusCode: 500,
+            }
+        }
+        
+    }
+
+    UpdateRecipe(recipe) {
+        try {    
+            if(recipes.findIndex(r => r.Id == recipe.Id) === -1) {
+                return {
+                    success: false,
+                    value: recipe.Id,
+                    message: `No recipe found with id '${recipe.Id}'`,
+                    statusCode: 404,
+                };
+            }
+        
+            recipes[oldRecipeIndex] = {
+                ...recipes[oldRecipeIndex],
+                ...recipe,
+            };
+        
+            return {
+                success: true,
+                value: recipe.Id,
+                message: "",
+                statusCode: 200,
+            }
+        }
+        catch(err) {
+            return {
+                success: false,
+                value: null,
+                message: err,
+                statusCode: 500,
+            }
+        }
+    }
 }
 
-export let recipeHeaders = recipes.map(mapRecipeToRecipeHeaders);
+export const recipeController = new RecipeController();

@@ -127,7 +127,9 @@ export class RecipeAddComponent {
       return;
     }
 
-    this.recipesService.AddRecipe(this.recipe);
+    this.recipesService.AddRecipe(this.recipe)
+      .then(console.log)
+      .catch(console.error);    
 
     this.router.navigate(['']);
   }

@@ -14,29 +14,26 @@ export class RecipesService {
       const options = {
         method: 'GET',
       };
+    
+      const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
-      try
-      {
-        const response = await fetch(`${this.host}/${this.endpoint}/`, options);
+      const data = await response.json();
 
-        const data = await response.json();
-
-        const recipes = data.map((o: any) => new Recipe(
-          parseInt(o.Id), 
-          o.Name, 
-          o.Description, 
-          o.Ingredients,
-          o.Instructions,
-          o.ExecutionTime, 
-          o.Difficulty, 
-          o.UrlImage));
-
-        return recipes;
+      if(response.status !== 200) {
+        throw new Error(data);
       }
-      catch(err) 
-      {
-        return [];
-      }
+
+      const recipes = data.map((o: any) => new Recipe(
+        parseInt(o.Id), 
+        o.Name, 
+        o.Description, 
+        o.Ingredients,
+        o.Instructions,
+        o.ExecutionTime, 
+        o.Difficulty, 
+        o.UrlImage));
+
+      return recipes;
     }
 
     public async GetRecipesHeader() {
@@ -44,26 +41,23 @@ export class RecipesService {
         method: 'GET',
       };
 
-      try
-      {
-        const response = await fetch(`${this.host}/${this.endpoint}/`, options);
+      const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
-        const data = await response.json();
+      const data = await response.json();
 
-        const recipeHeaders = data.map((o: any) => new RecipeHeader(
-          o.Id, 
-          o.Name,
-          o.ExecutionTime, 
-          o.Difficulty,
-          o.Ingredients,
-          o.UrlImage));
-
-        return recipeHeaders;
+      if(response.status !== 200) {
+        throw new Error(data);
       }
-      catch(err) 
-      {
-        return [];
-      }
+
+      const recipeHeaders = data.map((o: any) => new RecipeHeader(
+        o.Id, 
+        o.Name,
+        o.ExecutionTime, 
+        o.Difficulty,
+        o.Ingredients,
+        o.UrlImage));
+
+      return recipeHeaders;
     }
 
     public async GetRecipe(id: number) { 
@@ -71,28 +65,26 @@ export class RecipesService {
         method: 'GET',
       };
 
-      try
-      {
-        const response = await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
+      const response = await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
 
-        const data = await response.json();
+      const data = await response.json();
 
-        const recipe =  new Recipe(
-          parseInt(data.Id), 
-          data.Name, 
-          data.Description, 
-          data.Ingredients,
-          data.Instructions,
-          data.ExecutionTime, 
-          data.Difficulty, 
-          data.UrlImage);
-
-        return recipe;
+      if(response.status !== 200) {
+        throw new Error(data);
       }
-      catch(err) 
-      {
-        return Recipe.Empty;
-      }
+
+
+      const recipe =  new Recipe(
+        parseInt(data.Id), 
+        data.Name, 
+        data.Description, 
+        data.Ingredients,
+        data.Instructions,
+        data.ExecutionTime, 
+        data.Difficulty, 
+        data.UrlImage);
+
+      return recipe;
     }
 
     public async AddRecipe(recipe: Recipe) { 
@@ -101,16 +93,16 @@ export class RecipesService {
         body: JSON.stringify(recipe),
       };
 
-      try
-      {
-        await fetch(`${this.host}/${this.endpoint}/`, options);
+      const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
-        return true;
+      if(response.status !== 201) {
+        throw new Error(
+          await response.json()
+        );
       }
-      catch(err) 
-      {
-        return false;
-      }
+
+
+      return true;
     }
 
     public async UpdateRecipe(recipe: Recipe) { 
@@ -122,16 +114,16 @@ export class RecipesService {
         body: JSON.stringify(recipe),
       };
 
-      try
-      {
-        await fetch(`${this.host}/${this.endpoint}/${recipe.Id}/`, options);
+      const response = await fetch(`${this.host}/${this.endpoint}/${recipe.Id}/`, options);
 
-        return true;
+      if(response.status !== 200) {
+        throw new Error(
+          await response.json()
+        );
       }
-      catch(err) 
-      {
-        return false;
-      }
+
+
+      return true;
     }
 
     public async DeleteRecipe(id: number) { 
@@ -139,16 +131,15 @@ export class RecipesService {
         method: 'DELETE',
       };
 
-      try
-      {
-        await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
+      const response = await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
+      
+      if(response.status !== 200) {
+        throw new Error(
+          await response.json()
+        );
+      }
 
-        return true;
-      }
-      catch(err) 
-      {
-        return false;
-      }
+      return true;
     }
 
 }

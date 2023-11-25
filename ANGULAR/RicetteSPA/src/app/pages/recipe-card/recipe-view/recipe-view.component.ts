@@ -38,17 +38,12 @@ export class RecipeViewComponent {
     this.router.navigate(['']);
   }
 
-  async OnDeleteButtonClick() {
-    try
-    {
-      await this.recipesService.DeleteRecipe(this.recipe.Id);
+  OnDeleteButtonClick() {
+    this.recipesService.DeleteRecipe(this.recipe.Id)
+      .then(console.log)
+      .catch(console.error);
 
-      this.router.navigate(['']);
-    }
-    catch(err) 
-    {
-      console.error(err);
-    }
+    this.router.navigate(['']);
   }
 
   OnEditButtonClick() {

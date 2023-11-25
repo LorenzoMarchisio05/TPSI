@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { recipes, recipeHeaders, getInsertedRecipeId} from './data/recipes.mjs';
+import { recipeController } from './data/recipes.mjs';
 import sendErrorMessage from './modules/error.mjs';
 
 const app = express();
@@ -31,8 +31,10 @@ app.get("/recipes/", (req, res) => {
   setHeaders(res);
   res.setHeader("Content-Type", "application/json");
 
+  const recipe = recipeController.GetRecipes();
+
   console.log("requested recipes");
-  res.status(200).send(JSON.stringify(recipes));
+  res.status(200).send(JSON.stringify(recipe));
 });
 
 app.get("/recipes/:id/", (req, res) => {
@@ -40,15 +42,16 @@ app.get("/recipes/:id/", (req, res) => {
   res.setHeader("Content-Type", "application/json");
 
   const id = req.params.id;
-  const recipe = recipes.find(recipe => recipe.Id == id);
 
-  if(!recipe) {
-    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
+  const result = recipeController.GetRecipe(id);
+
+  if(!result.success) {
+    sendErrorMessage(res, result.message, result.statusCode);
     return;
   }
 
   console.log("requested recipe id:" + id);
-  res.status(200).send(JSON.stringify(recipe));
+  res.status(result.statusCode).send(JSON.stringify(result.value));
 });
 
 app.post("/recipes/", (req, res) => {
@@ -61,73 +64,72 @@ app.post("/recipes/", (req, res) => {
   }
 
   const recipe = req.body;
-  recipe.Id = getInsertedRecipeId();
 
   if(!recipe) {
     sendErrorMessage(res, `Recipe is empty`, 404);
     return;
   }
 
-  if(recipes.findIndex(r => r == recipe) !== -1) {
-    sendErrorMessage(res, `There is already this recipe`, 409);
+  const result = CreateRecipe(recipe);
+
+  if(!result.success) {
+    sendErrorMessage(res, result.message, result.statusCode);
     return;
   }
 
-  recipes.push(recipe);
-  recipeHeaders.push(mapRecipeToRecipeHeaders(recipe));
-
   console.log("created recipe id: " + recipe.id);
-  res.status(201).send();
+  res.status(result.statusCode).send();
 });
 
 app.put("/recipes/:id/", (req, res) => {
   setHeaders(res);
-  const id = req.params.id;
+  const { id } = req.params;
 
   const contentType = req.headers['content-type'];
   if(contentType !== "application/json") {
     sendErrorMessage(res, `Content-Type must be 'application/json'`, 415);
     return;
   }
+  
+  const recipe = req.body;
 
-  const oldRecipeIndex = recipes.findIndex(recipe => recipe.Id == id);
-  if(oldRecipeIndex === -1) {
-    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
+  const result = recipeController.UpdateRecipe(recipe);
+  if(!result.success) {
+    sendErrorMessage(res,result.message, result.statusCode);
     return;
   }
 
-  const newRecipe = req.body;
-
-  recipes[oldRecipeIndex] = {
-    ...recipes[oldRecipeIndex],
-    ...newRecipe,
-  };
-
   console.log("updated recipe id: " + id);
-  res.status(200).send();
+  res.status(result.statusCode).send();
 });
 
 app.delete("/recipes/:id/", (req, res) => {
   setHeaders(res);
   const id = req.params.id;
 
-  if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
-    sendErrorMessage(res, `No recipe found with id '${id}'`, 404);
+  const result = recipeController.DeleteRecipe(id);
+
+  if(!result.success) {
+    sendErrorMessage(res,result.message, result.statusCode);
     return;
   }
 
-  recipes = recipes.filter(recipe => recipe.Id != id);
-  recipeHeaders = recipeHeaders.filter(recipeHeader => recipeHeader.Id != id);
-
   console.log("deleted recipe id: " + id);
-  res.status(200).send();
+  res.status(result.statusCode).send();
 });
 
 app.get("/headers/", (req, res) => {
   setHeaders(res);
 
+  const result = recipeController.GetRecipeHeaders();
+
+  if(!result.success) {
+    sendErrorMessage(res,result.message, result.statusCode);
+    return;
+  }
+
   console.log("requested recipes headers");
-  res.status(200).send(JSON.stringify(recipeHeaders));
+  res.status(result.statusCode).send(JSON.stringify(headers));
 });
 
 app.listen(port, () => {

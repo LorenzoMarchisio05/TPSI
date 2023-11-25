@@ -7,6 +7,7 @@
             [recipeHeader]="recipeHeader" 
             (detailsRequest)="OnDetailClick($event)" />
 
+
         <div class="no-recipe-found" *ngIf="filteredRecipeHeaders.length === 0">
             <span>No Recipes Found</span>
         </div>
