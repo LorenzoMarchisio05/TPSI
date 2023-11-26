@@ -3,6 +3,7 @@ import { RecipeHeader } from '../../models/RecipeHeader';
 import { Router } from '@angular/router';
 import { RecipesService } from '../../services/recipes.service';
 import { RecipesSearchService } from '../../services/recipes-search.service';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'recipe-list',
@@ -22,7 +23,8 @@ export class RecipeListComponent {
     private router: Router,
     private recipesService: RecipesService,
     private recipeSearchService: RecipesSearchService,
-  ) {}
+    private notify: NotificationService
+  ) { }
 
   async ngOnInit() {
     if(this.init) {

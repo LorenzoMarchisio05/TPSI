@@ -14,6 +14,8 @@ const setHeaders = (res) => {
 
 // middleware 
 app.use((req, res, next) => {
+  console.log(`${req.method} request at ${req.url}`);
+
   setHeaders(res);
   next();
 }); 
@@ -33,7 +35,7 @@ app.get("/recipes/", (req, res) => {
 
   const recipe = recipeController.GetRecipes();
 
-  console.log("requested recipes");
+  console.log("sending recipes");
   res.status(200).send(JSON.stringify(recipe));
 });
 
@@ -50,7 +52,7 @@ app.get("/recipes/:id/", (req, res) => {
     return;
   }
 
-  console.log("requested recipe id:" + id);
+  console.log("sending recipe id:" + id);
   res.status(result.statusCode).send(JSON.stringify(result.value));
 });
 
@@ -85,7 +87,7 @@ app.put("/recipes/:id/", (req, res) => {
   setHeaders(res);
   const { id } = req.params;
 
-  const contentType = req.headers['content-type'];
+  const contentType = req.headers['Content-Type'];
   if(contentType !== "application/json") {
     sendErrorMessage(res, `Content-Type must be 'application/json'`, 415);
     return;
@@ -128,7 +130,7 @@ app.get("/headers/", (req, res) => {
     return;
   }
 
-  console.log("requested recipes headers");
+  console.log("sending recipes headers");
   res.status(result.statusCode).send(JSON.stringify(headers));
 });
 

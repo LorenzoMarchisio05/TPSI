@@ -8,10 +8,6 @@
     flex-direction: column;
 }
 
-.wrapper > .background-image {
-    height: 100%;
-}
-
 .header, .footer {
     padding-inline: max(1%, 5px);
     font-family: var(--accent-font);

@@ -12,6 +12,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeAddComponent } from './pages/recipe-add/recipe-add.component';
 import { ListItemComponent } from './components/list-item/list-item.component';
+import { NotificationComponent } from './components/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ListItemComponent } from './components/list-item/list-item.component';
     HomeComponent,
     RecipeAddComponent,
     ListItemComponent,
+    NotificationComponent,
   ],
   imports: [
     BrowserModule,

@@ -110,7 +110,6 @@ export class InputListComponent {
     }
 
     if(this.options.has(option)) {
-      console.log("cè")
       return;
     }
 

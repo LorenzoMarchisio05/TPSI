@@ -3,9 +3,9 @@ import { Router } from '@angular/router';
 
 import { RecipeHeader } from 'src/app/models/RecipeHeader';
 import { Recipe } from 'src/app/models/Recipe';
-import { MapStringToIngredient } from 'src/app/models/RecipeIngredient';
+import { MapStringToIngredient, RecipeIngredient } from 'src/app/models/RecipeIngredient';
 import { RecipesService } from 'src/app/services/recipes.service';
-import { GetRecipeDifficultyNames, RecipeDifficulty } from 'src/app/models/RecipeDifficultyEnum';
+import { GetRecipeDifficultyNames } from 'src/app/models/RecipeDifficultyEnum';
 
 
 @Component({
@@ -14,7 +14,7 @@ import { GetRecipeDifficultyNames, RecipeDifficulty } from 'src/app/models/Recip
   styleUrls: ['./recipe-add.component.css'],
 })
 export class RecipeAddComponent {
-  recipe: Recipe = Recipe.Empty;
+  recipe!: Recipe;
   recipeHeader: RecipeHeader = RecipeHeader.Empty;
   difficulties: string[] = GetRecipeDifficultyNames();
 
@@ -24,7 +24,15 @@ export class RecipeAddComponent {
     ) { }
 
   ngOnInit() {
-    this.recipe = Recipe.Empty;
+    this.recipe = { ...Recipe.Empty } as Recipe;
+
+    this.recipe = new Recipe(-1, "nome asdf", "descrizione", [
+      {
+        quantity: 10,
+        measure: "gr",
+        name: "nome",
+      }], ["instructions"], 10, 0, "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fit%2Fimages%2Ffood&psig=AOvVaw3qpR5ZwsW3xx9TKqs1aMYS&ust=1701114345163000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIj_vfO24oIDFQAAAAAdAAAAABAE");
+
     this.recipeHeader.Difficulty = this.recipe.Difficulty;
     this.recipeHeader.ExecutionTime = this.recipe.ExecutionTime;
     this.recipeHeader.Name = this.recipe.Name;
@@ -89,9 +97,15 @@ export class RecipeAddComponent {
   }
 
   OnIngredientsChanged(newData: Set<string>) {
-    this.recipe.Ingredients = [...newData].map((ingredient) =>
-      MapStringToIngredient(ingredient)
-    );
+    this.recipe.Ingredients = [...newData].map((ingredient) => {
+      try
+      {
+        return MapStringToIngredient(ingredient);
+      }
+      catch(err) {
+        return null;
+      }
+    }).filter((ingredient) => ingredient != null) as Array<RecipeIngredient>;
   }
 
   OnInstructionsChanged(newData: Set<string>) {
@@ -109,6 +123,8 @@ export class RecipeAddComponent {
   }
 
   OnSave() {
+    console.log(Recipe.Empty, this.recipe);
+
     const nameChanged = Recipe.Empty.Name != this.recipe.Name;
     const executionTimeChanged = Recipe.Empty.ExecutionTime != this.recipe.ExecutionTime;
     const urlImageChanged = Recipe.Empty.UrlImage != this.recipe.UrlImage;
@@ -122,6 +138,15 @@ export class RecipeAddComponent {
       instructionsChanged && this.recipe.Instructions.length > 0 &&
       descriptionChanged
     );
+
+    console.log(nameChanged, 
+      executionTimeChanged,
+      urlImageChanged,
+      ingredientsChanged, 
+      this.recipe.Ingredients.length > 0,
+      instructionsChanged,
+      this.recipe.Instructions.length > 0,
+      descriptionChanged)
 
     if(!changesAreOk) {
       return;

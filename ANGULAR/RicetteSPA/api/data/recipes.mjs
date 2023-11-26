@@ -107,7 +107,10 @@ class RecipeController
             const recipe = recipes.find(recipe => recipe.Id == id);
 
             if(!recipe) {
-                throw new Error('recipe not found');
+                throw new Error({
+                    message: 'recipe not found',
+                    code: 404,
+                });
             }
 
             return {
@@ -118,11 +121,12 @@ class RecipeController
             }
         }
         catch(err) {
+            console.error(err);
             return {
                 success: false,
                 value: null,
-                message: err,
-                statusCode: 404,
+                message: err.message || err,
+                statusCode: err.code || 500,
             }
         }
     }
@@ -137,11 +141,12 @@ class RecipeController
             }
         }
         catch(err) {
+            console.error(err);
             return {
                 success: false,
-                value: "",
-                message: "",
-                statusCode: 500,
+                value: null,
+                message: err.message || err,
+                statusCode: err.code || 500,
             }
         }
     };
@@ -159,11 +164,12 @@ class RecipeController
             }
         }
         catch(err) {
+            console.error(err);
             return {
                 success: false,
                 value: null,
-                message: err,
-                statusCode: 500,
+                message: err.message || err,
+                statusCode: err.code || 500,
             }
         }
     }
@@ -171,12 +177,10 @@ class RecipeController
     DeleteRecipe(id) {
         try {
             if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
-                return {
-                    success: false,
-                    value: null,
+                throw new Error({
                     message: `No recipe found with id '${id}'`,
-                    statusCode: 404,
-                }
+                    code: 404,
+                });
             }
 
             recipes = recipes.filter(recipe => recipe.Id != id);
@@ -189,11 +193,12 @@ class RecipeController
             }
         }
         catch(err) {
+            console.error(err);
             return {
                 success: false,
                 value: null,
-                message: err,
-                statusCode: 500,
+                message: err.message || err,
+                statusCode: err.code || 500,
             }
         }
         
@@ -201,13 +206,13 @@ class RecipeController
 
     UpdateRecipe(recipe) {
         try {    
-            if(recipes.findIndex(r => r.Id == recipe.Id) === -1) {
-                return {
-                    success: false,
-                    value: recipe.Id,
+            const oldRecipeIndex = recipes.findIndex(r => r.Id == recipe.Id);
+            
+            if(oldRecipeIndex === -1) {
+                throw new Error({
                     message: `No recipe found with id '${recipe.Id}'`,
-                    statusCode: 404,
-                };
+                    code: 404,
+                });
             }
         
             recipes[oldRecipeIndex] = {
@@ -223,11 +228,12 @@ class RecipeController
             }
         }
         catch(err) {
+            console.error(err);
             return {
                 success: false,
                 value: null,
-                message: err,
-                statusCode: 500,
+                message: err.message || err,
+                statusCode: err.code || 500,
             }
         }
     }

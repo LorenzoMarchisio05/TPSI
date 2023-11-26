@@ -35,8 +35,12 @@
     </section>
     
     <section class="recipe-instructions-section">
+        <h2> DESCRIPTION</h2>
+        <p>
+            {{ recipe.Description || 'No description provided' }}
+        </p>
+
         <h2> DIRECTIONS </h2>
-    
         <ul class="recipe-instructions">
             <li *ngFor="let instruction of recipe.Instructions">{{instruction}}</li>
         </ul>

@@ -1,0 +1,15 @@
+.wrapper {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+
+.btn-back {
+    font-size: max(3%, 2rem);
+    margin-bottom: 5%;
+    padding-inline: 5%;
+}
