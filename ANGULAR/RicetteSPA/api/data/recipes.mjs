@@ -177,7 +177,7 @@ class RecipeController
     DeleteRecipe(id) {
         try {
             if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
-                throw new Error({
+                const error = new Error({
                     message: `No recipe found with id '${id}'`,
                     code: 404,
                 });

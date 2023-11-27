@@ -33,8 +33,9 @@ export class RecipeListComponent {
         this.recipeHeaders = await this.recipesService.GetRecipesHeader();
         this.filteredRecipeHeaders = this.recipeHeaders;
       }
-      catch(err) {
+      catch(err: any) {
         console.error(err);
+        this.notify.error(err.ToString());
       }
 
       this.init = false;

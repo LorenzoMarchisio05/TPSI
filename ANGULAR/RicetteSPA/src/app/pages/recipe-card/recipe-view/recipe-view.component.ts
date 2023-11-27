@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Recipe } from '../../../models/Recipe';
 import { RecipesService } from '../../../services/recipes.service';
 import { RecipeIngredient } from '../../../models/RecipeIngredient';
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'recipe-view',
@@ -24,6 +25,7 @@ export class RecipeViewComponent {
   constructor(
     private router: Router,
     private recipesService: RecipesService,
+    private notify: NotificationService,
   ) { }
 
   async ngOnInit() {
@@ -40,8 +42,14 @@ export class RecipeViewComponent {
 
   OnDeleteButtonClick() {
     this.recipesService.DeleteRecipe(this.recipe.Id)
-      .then(console.log)
-      .catch(console.error);
+      .then((message) => {
+        console.log(message);
+        this.notify.success("Recipe deleted correctly");
+      } )
+      .catch((err: Error) => {
+        console.error(err);
+        this.notify.error("Ooops something went wrong");
+      });    
 
     this.router.navigate(['']);
   }

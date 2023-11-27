@@ -20,7 +20,7 @@ export class RecipesService {
       const data = await response.json();
 
       if(response.status !== 200) {
-        throw new Error(data);
+        throw new Error(data.message);
       }
 
       const recipes = data.map((o: any) => new Recipe(
@@ -41,12 +41,12 @@ export class RecipesService {
         method: 'GET',
       };
 
-      const response = await fetch(`${this.host}/${this.endpoint}/`, options);
+      const response = await fetch(`${this.host}/headers/`, options);
 
       const data = await response.json();
 
       if(response.status !== 200) {
-        throw new Error(data);
+        throw new Error(data.message);
       }
 
       const recipeHeaders = data.map((o: any) => new RecipeHeader(
@@ -70,7 +70,7 @@ export class RecipesService {
       const data = await response.json();
 
       if(response.status !== 200) {
-        throw new Error(data);
+        throw new Error(data.message);
       }
 
 
@@ -96,9 +96,8 @@ export class RecipesService {
       const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
       if(response.status !== 201) {
-        throw new Error(
-          await response.json()
-        );
+        const data = await response.json();
+        throw new Error(data.message);
       }
 
 
@@ -115,13 +114,12 @@ export class RecipesService {
       };
 
       const response = await fetch(`${this.host}/${this.endpoint}/${recipe.Id}/`, options);
+      
 
       if(response.status !== 200) {
-        throw new Error(
-          await response.json()
-        );
+        const data = await response.json();
+        throw new Error(data.message);
       }
-
 
       return true;
     }
@@ -133,10 +131,10 @@ export class RecipesService {
 
       const response = await fetch(`${this.host}/${this.endpoint}/${id}/`, options);
       
+
       if(response.status !== 200) {
-        throw new Error(
-          await response.json()
-        );
+        const data = await response.json();
+        throw new Error(data.message);
       }
 
       return true;

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { Alert } from '../models/Alert';
 import { AlertType } from '../models/AlertType';
 
@@ -8,9 +8,13 @@ import { AlertType } from '../models/AlertType';
 })
 export class NotificationService {
 
-  private notification$: Subject<Alert> = new BehaviorSubject({} as Alert);
+  private notification$: Subject<Alert> = new Subject();
 
   constructor() { }
+
+  success(message: string, duration: number = -1) {
+    this.notify(message,"success" , duration);
+  }
 
   message(message: string, duration: number = -1) {
     this.notify(message,"message" , duration);
@@ -25,10 +29,13 @@ export class NotificationService {
   }
 
   private notify(message: string, type: AlertType,  duration: number) {
-    duration = !duration ? 3000 : duration;
+    console.log(message);
+    duration = duration === -1 ? 3000 : duration;
 
     const alert: Alert = {
-      message, type, duration
+      message, 
+      type, 
+      duration,
     };
 
     this.notification$.next(alert);

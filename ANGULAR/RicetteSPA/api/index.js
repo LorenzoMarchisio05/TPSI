@@ -87,8 +87,8 @@ app.put("/recipes/:id/", (req, res) => {
   setHeaders(res);
   const { id } = req.params;
 
-  const contentType = req.headers['Content-Type'];
-  if(contentType !== "application/json") {
+  const contentType = req.headers['content-type'];
+  if(contentType !== "application/json" && !req.is("application/json")) {
     sendErrorMessage(res, `Content-Type must be 'application/json'`, 415);
     return;
   }
@@ -131,7 +131,7 @@ app.get("/headers/", (req, res) => {
   }
 
   console.log("sending recipes headers");
-  res.status(result.statusCode).send(JSON.stringify(headers));
+  res.status(result.statusCode).send(JSON.stringify(result.value));
 });
 
 app.listen(port, () => {

@@ -1,7 +1,7 @@
 import { Component, ElementRef, Renderer2, ViewChild } from '@angular/core';
-import { takeWhile } from 'rxjs';
+import { Subscription, take, takeUntil, takeWhile } from 'rxjs';
 import { Alert } from 'src/app/models/Alert';
-import { AlertType, MapAlertTypeToBootstrapType } from 'src/app/models/AlertType';
+import { MapAlertTypeToBootstrapType } from 'src/app/models/AlertType';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -10,8 +10,10 @@ import { NotificationService } from 'src/app/services/notification.service';
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent {
-  @ViewChild('notificationContainer') container!: ElementRef<HTMLDivElement>;
-  exists: boolean = true;
+  @ViewChild('notificationContainer') 
+  container!: ElementRef<HTMLDivElement>;
+
+  private subscription!: Subscription;
 
   constructor(
     private notificationService: NotificationService,
@@ -19,10 +21,9 @@ export class NotificationComponent {
   ) { }
 
   ngOnInit() {
-    this.notificationService.notification
-      .pipe(takeWhile(() => this.exists))
+    this.subscription = this.notificationService.notification
+      .pipe(take(1))
       .subscribe(alert => {        
-        console.log(alert);
         if(alert) {
           this.render(alert);
         }
@@ -31,20 +32,24 @@ export class NotificationComponent {
 
   render(alert: Alert) {
     const notification = this.renderer.createElement("div");
-    const html = `
-    <div class="alert ${MapAlertTypeToBootstrapType(alert.type)}" role="alert" #notificationContainer>
-      ${alert.message}
-    </div>
-    `;
-    const text = this.renderer.createText(html);
-
+    
+    this.renderer.addClass(notification, "alert");
+    this.renderer.addClass(notification, MapAlertTypeToBootstrapType(alert.type));
+    const text = this.renderer.createText(alert.message);
     this.renderer.appendChild(notification, text);
 
+    this.renderer.appendChild(this.container.nativeElement, notification);
+
+    setTimeout(() => {
+      this.renderer.setStyle(notification, "opacity", 0);
+      this.subscription.unsubscribe();
+
+      setTimeout(() => {
+        this.renderer.removeChild(this.container.nativeElement, notification);
+      }, 1000);
+    }, alert.duration);
 
     this.ngOnInit();
   }
 
-  ngOnDestroy() {
-    this.exists = false;
-  }
 } 

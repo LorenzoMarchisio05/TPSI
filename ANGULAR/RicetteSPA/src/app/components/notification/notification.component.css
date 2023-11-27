@@ -1,0 +1,16 @@
+.notification-center {
+    position: fixed;
+    z-index: 3000;
+    top: min(10px, 3%);
+    right: 5px;
+    width: 25%;
+    max-height: 40%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+}
+
+.notification-center .alert {
+    transition: opacity 350ms;
+}

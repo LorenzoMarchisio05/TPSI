@@ -6,6 +6,7 @@ import { Recipe } from 'src/app/models/Recipe';
 import { MapStringToIngredient, RecipeIngredient } from 'src/app/models/RecipeIngredient';
 import { RecipesService } from 'src/app/services/recipes.service';
 import { GetRecipeDifficultyNames } from 'src/app/models/RecipeDifficultyEnum';
+import { NotificationService } from 'src/app/services/notification.service';
 
 
 @Component({
@@ -20,18 +21,20 @@ export class RecipeAddComponent {
 
   constructor(
     private recipesService: RecipesService,
-    private router: Router
+    private router: Router,
+    private notify: NotificationService,
     ) { }
 
   ngOnInit() {
     this.recipe = { ...Recipe.Empty } as Recipe;
 
+    
     this.recipe = new Recipe(-1, "nome asdf", "descrizione", [
       {
         quantity: 10,
         measure: "gr",
         name: "nome",
-      }], ["instructions"], 10, 0, "https://www.google.com/url?sa=i&url=https%3A%2F%2Funsplash.com%2Fit%2Fimages%2Ffood&psig=AOvVaw3qpR5ZwsW3xx9TKqs1aMYS&ust=1701114345163000&source=images&cd=vfe&ved=0CBEQjRxqFwoTCIj_vfO24oIDFQAAAAAdAAAAABAE");
+      }], ["instructions"], 10, 0, "https://static01.nyt.com/images/2021/02/17/dining/17tootired-grilled-cheese/17tootired-grilled-cheese-articleLarge.jpg?quality=75&auto=webp&disable=upscale");
 
     this.recipeHeader.Difficulty = this.recipe.Difficulty;
     this.recipeHeader.ExecutionTime = this.recipe.ExecutionTime;
@@ -103,6 +106,7 @@ export class RecipeAddComponent {
         return MapStringToIngredient(ingredient);
       }
       catch(err) {
+        this.notify.error(`${ingredient} has an invalid format`);
         return null;
       }
     }).filter((ingredient) => ingredient != null) as Array<RecipeIngredient>;
@@ -123,8 +127,6 @@ export class RecipeAddComponent {
   }
 
   OnSave() {
-    console.log(Recipe.Empty, this.recipe);
-
     const nameChanged = Recipe.Empty.Name != this.recipe.Name;
     const executionTimeChanged = Recipe.Empty.ExecutionTime != this.recipe.ExecutionTime;
     const urlImageChanged = Recipe.Empty.UrlImage != this.recipe.UrlImage;
@@ -139,22 +141,21 @@ export class RecipeAddComponent {
       descriptionChanged
     );
 
-    console.log(nameChanged, 
-      executionTimeChanged,
-      urlImageChanged,
-      ingredientsChanged, 
-      this.recipe.Ingredients.length > 0,
-      instructionsChanged,
-      this.recipe.Instructions.length > 0,
-      descriptionChanged)
 
     if(!changesAreOk) {
+      this.notify.error("Changes aren't ok, unable to add the recipe");
       return;
     }
 
     this.recipesService.AddRecipe(this.recipe)
-      .then(console.log)
-      .catch(console.error);    
+      .then((message) => {
+        console.log(message);
+        this.notify.success("Recipe added correctly");
+      } )
+      .catch((err: Error) => {
+        console.error(err);
+        this.notify.error("Ooops something went wrong");
+      });    
 
     this.router.navigate(['']);
   }
