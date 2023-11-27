@@ -10,7 +10,7 @@ it will start concurrently client and server at the same time
 ## Client/server Testing
 
 Run `npm run client` to run the server side of the application
-It will start the angular app at [client link](localhost:4200)
+It will start the angular app at [client link](http://localhost:4200)
 
 Run `npm run server` to run the server side of the application
-It will start a node.js server and expose the data to [server link](localhost:3000)
+It will start a node.js server and expose the data to [server link](http://localhost:3000)
