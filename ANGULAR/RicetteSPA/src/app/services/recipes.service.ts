@@ -46,6 +46,10 @@ export class RecipesService {
       const data = await response.json();
 
       if(response.status !== 200) {
+        if(response.status === 500){
+          throw new Error("Ooops something went wrong");
+        }
+        
         throw new Error(data.message);
       }
 
@@ -70,6 +74,10 @@ export class RecipesService {
       const data = await response.json();
 
       if(response.status !== 200) {
+        if(response.status === 500){
+          throw new Error("Ooops something went wrong");
+        }
+
         throw new Error(data.message);
       }
 
@@ -91,11 +99,18 @@ export class RecipesService {
       const options = {
         method: 'POST',
         body: JSON.stringify(recipe),
+        headers: {
+          "Content-Type": "application/json",
+        },
       };
 
       const response = await fetch(`${this.host}/${this.endpoint}/`, options);
 
       if(response.status !== 201) {
+        if(response.status === 500){
+          throw new Error("Ooops something went wrong");
+        }
+
         const data = await response.json();
         throw new Error(data.message);
       }
@@ -117,6 +132,10 @@ export class RecipesService {
       
 
       if(response.status !== 200) {
+        if(response.status === 500){
+          throw new Error("Ooops something went wrong");
+        }
+
         const data = await response.json();
         throw new Error(data.message);
       }
@@ -133,6 +152,10 @@ export class RecipesService {
       
 
       if(response.status !== 200) {
+        if(response.status === 500){
+          throw new Error("Ooops something went wrong");
+        }
+
         const data = await response.json();
         throw new Error(data.message);
       }

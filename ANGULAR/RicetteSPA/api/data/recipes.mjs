@@ -95,6 +95,9 @@ class RecipeController
     };
 
     #GetInsertedRecipeId() {
+        if(recipes.length === 0) {
+            return 0;
+        }
         return recipes.reduce((prev, current) => prev.Id > current.Id ? prev : current).Id + 1;
     }
 
@@ -156,6 +159,27 @@ class RecipeController
 
     CreateRecipe(recipe) {
         try {
+            const { Description, Difficulty, ExecutionTime, Name, UrlImage } = recipe;
+            const Ingredients = recipe.Ingredients.join(',');
+            const Instructions = recipe.Instructions.join(',');
+
+            if(recipes.some(r => (
+                    r.Description === Description &&
+                    r.Difficulty === Difficulty &&
+                    r.ExecutionTime === ExecutionTime &&
+                    r.Ingredients.join(',') ===  Ingredients &&
+                    r.Instructions.join(',') ===  Instructions && 
+                    r.Name === Name &&
+                    r.UrlImage === UrlImage
+                ))) {
+                    return {
+                        success: false,
+                        value: null,
+                        message: "Exisxts already a recipe with the same data",
+                        statusCode: 409,
+                    }
+                }
+
             recipe.Id = this.#GetInsertedRecipeId();
             recipes.push(recipe);
     

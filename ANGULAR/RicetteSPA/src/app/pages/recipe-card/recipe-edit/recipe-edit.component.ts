@@ -70,12 +70,11 @@ export class RecipeEditComponent {
     }
     this.recipesService.UpdateRecipe(this.recipe)
       .then((message) => {
-        console.log(message);
         this.notify.success("Recipe modified correctly");
       } )
       .catch((err: Error) => {
         console.error(err);
-        this.notify.error("Ooops something went wrong");
+        this.notify.error(err.message);
       });    
 
     this.EditRecipeEvent.emit();
@@ -98,6 +97,7 @@ export class RecipeEditComponent {
       || descriptionChanged;
 
     if(!anyChange) {
+      this.notify.warning("Nothing changed");
       this.EditRecipeEvent.emit();
       return;
     }

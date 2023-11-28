@@ -9,7 +9,7 @@ const port = 3000;
 const setHeaders = (res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,DELETE,PUT, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+  res.setHeader("Access-Control-Allow-Headers", "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, content-type, Access-Control-Request-Method, Access-Control-Request-Headers");
 }
 
 // middleware 
@@ -60,7 +60,7 @@ app.post("/recipes/", (req, res) => {
   setHeaders(res);
 
   const contentType = req.headers['content-type'];
-  if(contentType !== "application/json") {
+  if(contentType !== "application/json" || !req.is("application/json")) {
     sendErrorMessage(res, `Content-Type must be 'application/json'`, 415);
     return;
   }
@@ -72,7 +72,7 @@ app.post("/recipes/", (req, res) => {
     return;
   }
 
-  const result = CreateRecipe(recipe);
+  const result = recipeController.CreateRecipe(recipe);
 
   if(!result.success) {
     sendErrorMessage(res, result.message, result.statusCode);

@@ -8,7 +8,6 @@ import { RecipesService } from 'src/app/services/recipes.service';
 import { GetRecipeDifficultyNames } from 'src/app/models/RecipeDifficultyEnum';
 import { NotificationService } from 'src/app/services/notification.service';
 
-
 @Component({
   selector: 'recipe-add',
   templateUrl: './recipe-add.component.html',
@@ -154,7 +153,7 @@ export class RecipeAddComponent {
       } )
       .catch((err: Error) => {
         console.error(err);
-        this.notify.error("Ooops something went wrong");
+        this.notify.error(err.message);
       });    
 
     this.router.navigate(['']);

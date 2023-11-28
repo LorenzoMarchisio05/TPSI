@@ -48,7 +48,7 @@ export class RecipeViewComponent {
       } )
       .catch((err: Error) => {
         console.error(err);
-        this.notify.error("Ooops something went wrong");
+        this.notify.error(err.message);
       });    
 
     this.router.navigate(['']);

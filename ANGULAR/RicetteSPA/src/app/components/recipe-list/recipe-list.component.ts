@@ -23,23 +23,29 @@ export class RecipeListComponent {
     private router: Router,
     private recipesService: RecipesService,
     private recipeSearchService: RecipesSearchService,
-    private notify: NotificationService
+    private notify: NotificationService,
   ) { }
 
   async ngOnInit() {
     if(this.init) {
-      try
+      this.init = false;
+      
+      await this.FetchRecipeHeaders();
+    }
+  }
+
+  async FetchRecipeHeaders() {
+    try
       {
         this.recipeHeaders = await this.recipesService.GetRecipesHeader();
         this.filteredRecipeHeaders = this.recipeHeaders;
+
+        this.ngOnInit();
       }
       catch(err: any) {
         console.error(err);
         this.notify.error(err.ToString());
       }
-
-      this.init = false;
-    }
   }
 
   OnDetailClick(id: number) {

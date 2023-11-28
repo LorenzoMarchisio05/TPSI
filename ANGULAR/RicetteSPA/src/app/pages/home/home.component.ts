@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import { RecipeListComponent } from 'src/app/components/recipe-list/recipe-list.component';
 
 @Component({
   selector: 'home',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-  
+  @ViewChild("recipes") recipes!: ElementRef<RecipeListComponent>
+
+  ngOnInit() {
+    this.recipes.nativeElement.FetchRecipeHeaders();
+  }
 }
