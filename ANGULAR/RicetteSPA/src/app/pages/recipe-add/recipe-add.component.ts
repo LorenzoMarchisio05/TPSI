@@ -161,6 +161,8 @@ export class RecipeAddComponent {
   }
 
   OnDiscardChanges() { 
+    this.notify.warning("Changes ignored");
+
     this.router.navigate(['']);
   }
 }

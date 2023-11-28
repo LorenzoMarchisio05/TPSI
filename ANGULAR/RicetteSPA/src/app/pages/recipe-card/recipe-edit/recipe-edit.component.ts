@@ -102,6 +102,8 @@ export class RecipeEditComponent {
       return;
     }
 
+    this.notify.warning("Changes ignored");
+
     this.EditRecipeEvent.emit();
   }
 }

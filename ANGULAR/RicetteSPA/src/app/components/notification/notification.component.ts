@@ -13,20 +13,19 @@ export class NotificationComponent {
   @ViewChild('notificationContainer') 
   container!: ElementRef<HTMLDivElement>;
 
-  private subscription!: Subscription;
-
   constructor(
     private notificationService: NotificationService,
     private renderer: Renderer2,
   ) { }
 
   ngOnInit() {
-    this.subscription = this.notificationService.notification
-      .pipe(take(1))
-      .subscribe(alert => {        
+    const subscription = this.notificationService.notification
+      .subscribe((alert) => {        
         if(alert) {
           this.render(alert);
         }
+
+        subscription.unsubscribe();
       })
   }
 
@@ -42,11 +41,10 @@ export class NotificationComponent {
 
     setTimeout(() => {
       this.renderer.setStyle(notification, "opacity", 0);
-      this.subscription.unsubscribe();
 
       setTimeout(() => {
         this.renderer.removeChild(this.container.nativeElement, notification);
-      }, 1000);
+      }, 350);
     }, alert.duration);
 
     this.ngOnInit();

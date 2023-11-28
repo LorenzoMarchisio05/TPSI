@@ -107,10 +107,13 @@ class RecipeController
             const recipe = recipes.find(recipe => recipe.Id == id);
 
             if(!recipe) {
-                throw new Error({
+                console.error('recipe not found');
+                return {
+                    success: false,
+                    value: null,
                     message: 'recipe not found',
-                    code: 404,
-                });
+                    statusCode: 404,
+                }
             }
 
             return {
@@ -125,8 +128,8 @@ class RecipeController
             return {
                 success: false,
                 value: null,
-                message: err.message || err,
-                statusCode: err.code || 500,
+                message: message,
+                statusCode: code,
             }
         }
     }
@@ -177,10 +180,13 @@ class RecipeController
     DeleteRecipe(id) {
         try {
             if(recipes.findIndex(recipe => recipe.Id == id) === -1) {
-                const error = new Error({
+                console.error(`No recipe found with id '${id}'`,);
+                return {
+                    success: false,
+                    value: null,
                     message: `No recipe found with id '${id}'`,
-                    code: 404,
-                });
+                    statusCode: 404,
+                }
             }
 
             recipes = recipes.filter(recipe => recipe.Id != id);
@@ -209,10 +215,13 @@ class RecipeController
             const oldRecipeIndex = recipes.findIndex(r => r.Id == recipe.Id);
             
             if(oldRecipeIndex === -1) {
-                throw new Error({
+                console.error(`No recipe found with id '${recipe.Id}'`);
+                return {
+                    success: false,
+                    value: null,
                     message: `No recipe found with id '${recipe.Id}'`,
-                    code: 404,
-                });
+                    statusCode: 404,
+                }
             }
         
             recipes[oldRecipeIndex] = {
